@@ -1,16 +1,20 @@
 "use client";
 
-import { Link as MuiLink, LinkProps } from "@mui/material";
+import { Link as MuiLink, LinkProps, Box, useTheme } from "@mui/material";
 import { ReactNode } from "react";
 import { useContext } from "./Fade";
+import { useRouter } from "next/navigation";
+import { PrefetchKind } from "next/dist/client/components/router-reducer/router-reducer-types";
 
 interface Link {
-  href: string;
-  children: ReactNode;
+  href?: string;
+  children?: ReactNode;
 }
 
-export default function Link({ children, href }: Link) {
+export default function Link({ children, href = "" }: Link) {
   const ctx = useContext();
+  const router = useRouter();
+  const theme = useTheme();
 
   const linkProps: LinkProps = {};
 
@@ -24,7 +28,9 @@ export default function Link({ children, href }: Link) {
   return (
     <MuiLink
       {...linkProps}
+      sx={{ transition: `text-decoration-color ${theme.transitions.duration.standard}ms ease` }}
       href={href}
+      onMouseEnter={() => router.prefetch(href, { kind: PrefetchKind.FULL })}
       onClick={(event) => {
         if (newTab) return;
         event.preventDefault();

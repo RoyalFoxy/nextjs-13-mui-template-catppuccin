@@ -18,6 +18,7 @@ export default function InnerFade({ children }: InnerFade) {
 
   useEffect(() => {
     ctx.isExiting = false;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathName]);
 
   useEffect(() => {
@@ -34,7 +35,7 @@ export default function InnerFade({ children }: InnerFade) {
     <MuiFade
       in={ctx.visible}
       onTransitionEnd={() => {
-        router.push(ctx.nextHref);
+        if (ctx.isExiting) router.push(ctx.nextHref);
       }}>
       <Box>{children}</Box>
     </MuiFade>

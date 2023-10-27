@@ -1,7 +1,5 @@
-import {
-  experimental_extendTheme as extendTheme,
-} from "@mui/material";
-import { name } from "@/../package.json";
+import { experimental_extendTheme as extendTheme } from "@mui/material";
+import data from "@/../package.json";
 
 const mocha = {
   rosewater: "#f5e0dc",
@@ -140,20 +138,27 @@ const theme = extendTheme({
       },
     },
   },
+  typography: {
+    allVariants: {
+      textAlign: "center",
+    },
+  },
+  shape: {
+    borderRadius: 6,
+  },
   components: {
     MuiMenu: { styleOverrides: { paper: { backgroundImage: "none" } } },
     MuiCard: { styleOverrides: { root: { backgroundImage: "none" } } },
     MuiPaper: {
       styleOverrides: {
-        root: ({ theme, ownerState }) => ({
+        root: ({ theme }) => ({
           background: transparent(theme.vars.palette.catppuccin.crust),
           backdropFilter: "blur(var(--blur))",
-          WebkitBackdropFilter: "blur(var(--blur))",
         }),
       },
     },
   },
-  cssVarPrefix: name,
+  cssVarPrefix: data.name,
 });
 
 function transparent(color: string) {

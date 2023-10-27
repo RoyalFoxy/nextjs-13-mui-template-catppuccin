@@ -13,8 +13,14 @@ export default function InnerThemeRegistry({ children }: InnerThemeRegistry) {
 
   const scheme = useColorScheme();
   useEffect(() => {
-    scheme.setMode(prefersDarkMode ? "dark" : "light");
-  }, [prefersDarkMode]);
+    const mode = getPreferredMode(prefersDarkMode);
+    if (scheme.mode == mode) return;
+    scheme.setMode(mode);
+  }, [prefersDarkMode, scheme]);
 
   return <>{children}</>;
+}
+
+function getPreferredMode(prefersDarkMode: boolean): "dark" | "light" {
+  return prefersDarkMode ? "dark" : "light";
 }
