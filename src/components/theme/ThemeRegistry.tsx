@@ -1,13 +1,14 @@
 "use client";
 
+import { ReactElement, useState } from "react";
+import createCache, { Options } from "@emotion/cache";
+
 import { CacheProvider } from "@emotion/react";
 import CssBaseline from "@mui/material/CssBaseline";
-import createCache, { Options } from "@emotion/cache";
-import theme from "./Theme";
-import { useServerInsertedHTML } from "next/navigation";
-import { ReactElement, useState } from "react";
 import { Experimental_CssVarsProvider as CssVarsProvider } from "@mui/material";
-import InnerThemeRegistry from "./InnerThemeRegistry";
+import InnerThemeRegistry from "@theme/InnerThemeRegistry";
+import theme from "@theme/Theme";
+import { useServerInsertedHTML } from "next/navigation";
 
 interface ThemeRegistry {
   options: Options;

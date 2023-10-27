@@ -2,15 +2,15 @@ import { Typography, TypographyProps } from "@mui/material";
 
 import { ReactNode } from "react";
 
-interface P {
+interface Span {
   children?: ReactNode;
   /** Is set into `var(--template-palette-YOUR_COLOR)` */
   color?: string;
   underline?: boolean;
 }
 
-export default function P({ children, color, underline }: P) {
-  const sx: TypographyProps["sx"] = { marginTop: "1.5rem" };
+export default function Span({ children, color, underline }: Span) {
+  const sx: TypographyProps["sx"] = { color: "inherit" };
 
   if (
     color &&
@@ -23,7 +23,7 @@ export default function P({ children, color, underline }: P) {
   if (underline) sx.textDecoration = "underline";
 
   return (
-    <Typography variant="body1" component="p" sx={sx}>
+    <Typography variant="body1" component="span" sx={sx}>
       {children}
     </Typography>
   );

@@ -1,6 +1,6 @@
-import H from "@/components/content/H";
-import P from "@/components/content/P";
-import Link from "@/components/navigation/Link";
+import H from "@content/H";
+import P from "@content/P";
+import Link from "@navigation/Link";
 
 export default function Page() {
   return (

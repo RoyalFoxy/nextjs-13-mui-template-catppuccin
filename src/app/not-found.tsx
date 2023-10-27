@@ -1,14 +1,17 @@
-import H from "@/components/content/H";
-import P from "@/components/content/P";
-import Link from "@/components/navigation/Link";
+import H from "@content/H";
+import P from "@content/P";
+import Span from "@content/Span";
+import Link from "@navigation/Link";
 
 export default function NotFound() {
   return (
     <>
-      <H large>404</H>
+      <H large color="error" underline>
+        404
+      </H>
       <P>
-        I&apos;m not sure how you got here - But I&apos;m sure it&apos;s your
-        fault.
+        I&apos;m not sure how you got here - But I&apos;m sure it&apos;s&nbsp;
+        <Span color="error">your fault.</Span>
       </P>
       <P>
         Get back <Link href="/">Home</Link>.

@@ -4,10 +4,10 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
+import { Fade } from "@navigation/Fade";
+import LayoutView from "@components/LayoutView";
 import { ReactElement } from "react";
-import ThemeRegistry from "@/components/theme/ThemeRegistry";
-import { Fade } from "@/components/navigation/Fade";
-import { Box } from "@mui/material";
+import ThemeRegistry from "@theme/ThemeRegistry";
 
 interface Layout {
   children: ReactElement;
@@ -19,11 +19,7 @@ export default function Layout({ children }: Layout) {
       <body>
         <ThemeRegistry options={{ key: "mui", prepend: true }}>
           <Fade>
-            <Box sx={{display: "flex", justifyContent: "center"}}>
-              <Box sx={{ width: "calc(100vw - var(--margin) * 2)" }}>
-                {children}
-              </Box>
-            </Box>
+            <LayoutView>{children}</LayoutView>
           </Fade>
         </ThemeRegistry>
       </body>

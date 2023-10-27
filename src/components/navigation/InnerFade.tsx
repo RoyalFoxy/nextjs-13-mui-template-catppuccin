@@ -1,9 +1,9 @@
 "use client";
 
-import { ReactNode, useEffect } from "react";
 import { Box, Fade as MuiFade, useTheme } from "@mui/material";
-
+import { ReactNode, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
+
 import { useContext } from "./Fade";
 
 interface InnerFade {
@@ -26,7 +26,7 @@ export default function InnerFade({ children }: InnerFade) {
 
     const timeout = setTimeout(
       () => (ctx.visible = true),
-      theme.transitions.duration.enteringScreen
+      theme.transitions.duration.enteringScreen,
     );
     return () => clearTimeout(timeout);
   }, [theme.transitions.duration.enteringScreen, ctx]);
@@ -36,7 +36,8 @@ export default function InnerFade({ children }: InnerFade) {
       in={ctx.visible}
       onTransitionEnd={() => {
         if (ctx.isExiting) router.push(ctx.nextHref);
-      }}>
+      }}
+    >
       <Box>{children}</Box>
     </MuiFade>
   );

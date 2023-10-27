@@ -1,8 +1,9 @@
 "use client";
 
-import useMediaQuery from "@/useMediaQuery";
-import { useColorScheme } from "@mui/material";
 import { ReactElement, useEffect } from "react";
+
+import { useColorScheme } from "@mui/material";
+import useMediaQuery from "@/useMediaQuery";
 
 interface InnerThemeRegistry {
   children: ReactElement;

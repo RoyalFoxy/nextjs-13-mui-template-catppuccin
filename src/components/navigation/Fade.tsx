@@ -6,6 +6,7 @@ import {
   useContext as useCtx,
   useState,
 } from "react";
+
 import InnerFade from "./InnerFade";
 
 interface Context {

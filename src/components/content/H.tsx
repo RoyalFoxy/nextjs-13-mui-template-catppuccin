@@ -1,32 +1,36 @@
-import { Typography } from "@mui/material";
+import { Typography, TypographyProps } from "@mui/material";
+
 import { ReactNode } from "react";
 
 interface H {
   children?: ReactNode;
   large?: boolean;
   small?: boolean;
+  /** Is set into `var(--template-palette-YOUR_COLOR)` */
+  color?: string;
+  underline?: boolean;
 }
 
-export default function H({ children, large, small }: H) {
-  let variant: "h2" | "h3" | "h4" = "h3";
+export default function H({ children, large, small, color, underline }: H) {
   let tag: "h1" | "h2" | "h3" = "h2";
 
-  if (large) {
-    variant = "h2";
-    tag = "h1";
-  }
-  if (small) {
-    variant = "h4";
-    tag = "h3";
-  }
+  if (large) tag = "h1";
+  if (small) tag = "h3";
+
+  const sx: TypographyProps["sx"] = { marginTop: "1.5rem" };
+
+  if (
+    color &&
+    ["error", "primary", "info", "secondary", "success", "warning"].includes(
+      color,
+    )
+  )
+    color = `${color}-main`;
+  if (color) sx.color = `var(--template-palette-${color}) !important`;
+  if (underline) sx.textDecoration = "underline";
 
   return (
-    <Typography
-      variant={variant}
-      component={tag}
-      sx={{
-        marginTop: "1.5rem",
-      }}>
+    <Typography variant={tag} sx={sx}>
       {children}
     </Typography>
   );
