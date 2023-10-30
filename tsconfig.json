@@ -24,7 +24,7 @@
       "@content/*": ["./src/components/content/*"],
       "@navigation/*": ["./src/components/navigation/*"],
       "@theme/*": ["./src/components/theme/*"],
-      "@image": ["src/components/image/Image.tsx"],
+      "@image": ["./src/components/image/Image.tsx"],
       "@utils/*": ["./src/utils/*"]
     }
   },

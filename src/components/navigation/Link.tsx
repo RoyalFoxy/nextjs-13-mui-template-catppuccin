@@ -3,6 +3,7 @@
 import { LinkProps, Link as MuiLink, useTheme } from "@mui/material";
 import { usePathname, useRouter } from "next/navigation";
 
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { PrefetchKind } from "next/dist/client/components/router-reducer/router-reducer-types";
 import { ReactNode } from "react";
 import { useFadeContext } from "./FadeContext";
@@ -29,13 +30,14 @@ export default function Link({ children, href = "" }: Link) {
     linkProps.rel = "noopener noreferrer";
   }
 
-  console.log();
-
   return (
     <MuiLink
       {...linkProps}
       sx={{
-        transition: `text-decoration-color ${theme.transitions.duration.standard}ms ease`,
+        "transition": `text-decoration-color ${theme.transitions.duration.standard}ms ease`,
+        "&:hover svg": {
+          color: "var(--template-palette-primary-main)",
+        },
       }}
       href={href}
       onMouseEnter={() => router.prefetch(href, { kind: PrefetchKind.FULL })}
@@ -59,6 +61,18 @@ export default function Link({ children, href = "" }: Link) {
         ctx.visible = false;
       }}>
       {children}
+      {newTab && (
+        <OpenInNewIcon
+          sx={{
+            marginLeft: "0.125rem",
+            width: "1rem",
+            height: "1rem",
+            verticalAlign: "-7.5%",
+            color: "var(--template-palette-primary-dark)",
+            transition: `color ${theme.transitions.duration.standard}ms ease`,
+          }}
+        />
+      )}
     </MuiLink>
   );
 }
