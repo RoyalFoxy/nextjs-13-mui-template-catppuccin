@@ -50,7 +50,6 @@ export default function GlobalContext({ children }: GlobalContext) {
 
   useEffect(() => {
     const name = pageNameMap[pathname];
-    // if (!name) throw new Error("No page name found!");
     setPageName(name || "Not found");
   }, [pathname]);
 

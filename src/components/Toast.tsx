@@ -1,7 +1,7 @@
 import { Alert, useTheme } from "@mui/material";
 import { CSSProperties, ForwardedRef, useMemo } from "react";
 
-import interpolateColor from "@/interpolateColor";
+import interpolateColor from "@/utils/interpolateColor";
 import { transparency } from "./theme/Theme";
 import { useSnackbar } from "notistack";
 
@@ -34,7 +34,7 @@ export default function Toast(
       ref={ref}
       style={style}
       severity={variant}
-      sx={{ background: `${color}${transparency}` }}
+      sx={{ background: `${color}${transparency}`, boxShadow: "var(--template-shadows-4)" }}
       onClose={() => closeSnackbar(id)}>
       {message}
     </Alert>

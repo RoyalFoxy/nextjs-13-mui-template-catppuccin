@@ -47,7 +47,6 @@ export default function H({
   return (
     <Typography
       component={isSpan ? "span" : tag}
-      classes={`${isSpan ? tag : ""}`}
       variant={tag}
       sx={sx}>
       {children}

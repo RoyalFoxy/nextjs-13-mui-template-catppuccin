@@ -3,7 +3,9 @@
 import { ReactElement, useEffect } from "react";
 
 import { useColorScheme } from "@mui/material";
-import useMediaQuery from "@/useMediaQuery";
+import useMediaQuery from "@/utils/useMediaQuery";
+import Mocha from "@components/HLJS/themes/Mocha";
+import Latte from "@components/HLJS/themes/Mocha";
 
 interface InnerThemeRegistry {
   children: ReactElement;
@@ -19,7 +21,13 @@ export default function InnerThemeRegistry({ children }: InnerThemeRegistry) {
     scheme.setMode(mode);
   }, [prefersDarkMode, scheme]);
 
-  return <>{children}</>;
+  return (
+    <>
+      <Mocha active={prefersDarkMode} />
+      <Latte active={!prefersDarkMode} />
+      {children}
+    </>
+  );
 }
 
 function getPreferredMode(prefersDarkMode: boolean): "dark" | "light" {

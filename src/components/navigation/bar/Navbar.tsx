@@ -1,6 +1,6 @@
 "use client";
 
-import { AppBar, Box, Toolbar } from "@mui/material";
+import { AppBar, Box, Toolbar, useTheme } from "@mui/material";
 
 import Back from "./Back";
 import H from "@content/H";
@@ -14,7 +14,7 @@ export default function Navbar() {
       sx={{
         position: "fixed",
         background: "var(--transparent-crust)",
-        boxShadow: "0px 4px 30px rgba(0, 0, 0, 0.1)",
+        boxShadow: "var(--template-shadows-4)",
         backdropFilter: "blur(var(--blur))",
         WebkitBackdropFilter: "blur(var(--blur))",
         padding: "1rem var(--margin)",

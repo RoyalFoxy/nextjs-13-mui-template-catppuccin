@@ -23,7 +23,9 @@
       "@components/*": ["./src/components/*"],
       "@content/*": ["./src/components/content/*"],
       "@navigation/*": ["./src/components/navigation/*"],
-      "@theme/*": ["./src/components/theme/*"]
+      "@theme/*": ["./src/components/theme/*"],
+      "@image": ["src/components/image/Image.tsx"],
+      "@utils/*": ["./src/utils/*"]
     }
   },
   "include": [

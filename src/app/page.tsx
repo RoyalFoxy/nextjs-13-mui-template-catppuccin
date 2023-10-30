@@ -2,6 +2,8 @@ import H from "@content/H";
 import Link from "@navigation/Link";
 import P from "@content/P";
 
+import Image from "@image";
+
 export default function Page() {
   return (
     <>
@@ -13,6 +15,7 @@ export default function Page() {
         repudiandae animi minima corporis, architecto obcaecati perspiciatis
         recusandae et reprehenderit!
       </P>
+      <Image name="test" alt="" />
     </>
   );
 }

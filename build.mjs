@@ -235,7 +235,7 @@ function getOccurrences(filePath) {
 function countOccurrences(filePath, componentName) {
   const source = readFileSync(filePath).toString();
 
-  return (source.match(new RegExp(`<${componentName}(>| .*?>)`, "gm")) || [])
+  return (source.match(new RegExp(`<${componentName}(>|.*?>)`, "gms")) || [])
     .length;
 }
 
