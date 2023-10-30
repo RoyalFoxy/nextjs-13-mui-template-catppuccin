@@ -23,7 +23,7 @@ export default function Toast(
   const color = useMemo(() => {
     return interpolateColor(
       theme.palette.catppuccin.crust,
-      theme.palette[variant].dark
+      theme.palette[variant][theme.palette.mode]
     );
   }, [theme, variant]);
 
