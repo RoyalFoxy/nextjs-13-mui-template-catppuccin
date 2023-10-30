@@ -1,13 +1,14 @@
 "use client";
 
+import { Box, Fade as MuiFade, useTheme } from "@mui/material";
 import {
   ReactElement,
   createContext,
   useContext as useCtx,
+  useEffect,
   useState,
 } from "react";
-
-import InnerFade from "./InnerFade";
+import { usePathname, useRouter } from "next/navigation";
 
 interface Context {
   visible: boolean;
@@ -17,7 +18,7 @@ interface Context {
 
 const context = createContext<Context>({} as Context);
 
-export function useContext() {
+export function useFadeContext() {
   return useCtx(context);
 }
 
@@ -25,10 +26,14 @@ interface Fade {
   children: ReactElement;
 }
 
-export function Fade({ children }: Fade) {
+export function FadeContext({ children }: Fade) {
   const [getVisible, setVisible] = useState(false);
   const [getIsExiting, setIsExiting] = useState(false);
   const [getNextHref, setNextHref] = useState("");
+
+  const theme = useTheme();
+  const router = useRouter();
+  const pathName = usePathname();
 
   const ctx: Context = {
     get visible() {
@@ -50,9 +55,30 @@ export function Fade({ children }: Fade) {
       setNextHref(value);
     },
   };
+
+  useEffect(() => {
+    setIsExiting(false);
+  }, [pathName]);
+
+  useEffect(() => {
+    if (getIsExiting || getVisible) return;
+
+    const timeout = setTimeout(
+      () => setVisible(true),
+      theme.transitions.duration.enteringScreen
+    );
+    return () => clearTimeout(timeout);
+  }, [getIsExiting, getVisible, theme.transitions.duration.enteringScreen]);
+
   return (
     <context.Provider value={ctx}>
-      <InnerFade>{children}</InnerFade>
+      <MuiFade
+        in={getVisible}
+        onTransitionEnd={() => {
+          if (getIsExiting) router.push(getNextHref);
+        }}>
+        <Box>{children}</Box>
+      </MuiFade>
     </context.Provider>
   );
 }

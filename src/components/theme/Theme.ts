@@ -61,6 +61,11 @@ const latte = {
 
 export const transparency = "4c";
 
+const heading = () => ({
+  color: "var(--template-palette-primary-main)",
+  fontFamily: "Monocraft",
+});
+
 const theme = extendTheme({
   colorSchemes: {
     dark: {
@@ -142,6 +147,12 @@ const theme = extendTheme({
     allVariants: {
       textAlign: "center",
     },
+    h1: heading(),
+    h2: heading(),
+    h3: heading(),
+    h4: heading(),
+    h5: heading(),
+    h6: heading(),
   },
   shape: {
     borderRadius: 6,

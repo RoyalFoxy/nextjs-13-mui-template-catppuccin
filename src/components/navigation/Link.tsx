@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 
 import { PrefetchKind } from "next/dist/client/components/router-reducer/router-reducer-types";
 import { ReactNode } from "react";
-import { useContext } from "./Fade";
+import { useFadeContext } from "./FadeContext";
 import { useSnackbar } from "notistack";
 
 interface Link {
@@ -14,7 +14,7 @@ interface Link {
 }
 
 export default function Link({ children, href = "" }: Link) {
-  const ctx = useContext();
+  const ctx = useFadeContext();
   const router = useRouter();
   const theme = useTheme();
   const pathname = usePathname();

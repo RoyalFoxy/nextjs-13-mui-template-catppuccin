@@ -3,7 +3,7 @@ const digitToHex = (d: number) => d.toString(16).padStart(2, "0");
 const hexToDigit = (h: string) => parseInt(h, 16);
 
 const rgbRegex =
-  /^rgb\((?<red>[0-9]|[0-9]{2}|[01][0-9]{2}|2[0-4][0-9]|25[0-5]), (?<green>[0-9]|[0-9]{2}|[01][0-9]{2}|2[0-4][0-9]|25[0-5]), (?<blue>[0-9]|[0-9]{2}|[01][0-9]{2}|2[0-4][0-9]|25[0-5])\)$/;
+  /^rgb\((?<red>[0-9]|1?[0-9]{2}|2[0-4][0-9]|25[0-5]), ?(?<green>[0-9]|1?[0-9]{2}|2[0-4][0-9]|25[0-5]), ?(?<blue>[0-9]|1?[0-9]{2}|2[0-4][0-9]|25[0-5])\)$/;
 
 export default function interpolateColor(
   color1: string,

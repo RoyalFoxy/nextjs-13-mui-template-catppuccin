@@ -1,9 +1,14 @@
+"use client";
+
 import { AppBar, Box, Toolbar } from "@mui/material";
 
 import Back from "./Back";
+import H from "@content/H";
 import MenuButton from "./MenuButton";
+import { useGlobalContext } from "@/globalContext";
 
 export default function Navbar() {
+  const ctx = useGlobalContext();
   return (
     <AppBar
       sx={{
@@ -18,6 +23,14 @@ export default function Navbar() {
         <MenuButton />
         <Box sx={{ marginLeft: 1 }}>
           <Back />
+        </Box>
+        <Box sx={{ marginLeft: "auto" }}>
+          <H
+            extraSmall
+            noTopMargin
+            isSpan>
+            {ctx.pageName}
+          </H>
         </Box>
       </Toolbar>
     </AppBar>
