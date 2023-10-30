@@ -15,7 +15,7 @@ export default function P({ children, color, underline }: P) {
   if (
     color &&
     ["error", "primary", "info", "secondary", "success", "warning"].includes(
-      color,
+      color
     )
   )
     color = `${color}-main`;
@@ -23,7 +23,10 @@ export default function P({ children, color, underline }: P) {
   if (underline) sx.textDecoration = "underline";
 
   return (
-    <Typography variant="body1" component="p" sx={sx}>
+    <Typography
+      variant="body1"
+      component="p"
+      sx={sx}>
       {children}
     </Typography>
   );

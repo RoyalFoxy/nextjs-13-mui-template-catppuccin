@@ -1,11 +1,12 @@
 "use client";
 
 import { Box, IconButton, Menu, MenuItem } from "@mui/material";
-import { useState, MouseEvent } from "react";
-import MenuIcon from "@mui/icons-material/Menu";
+import { MouseEvent, useState } from "react";
+
 import CloseIcon from "@mui/icons-material/Close";
 import For from "@components/For";
 import Link from "@navigation/Link";
+import MenuIcon from "@mui/icons-material/Menu";
 
 export default function Home() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -27,14 +28,18 @@ export default function Home() {
         onClick={handleClick}
         size="large"
         edge="start"
-        color="primary"
-      >
+        color="primary">
         {open ? <CloseIcon fontSize="large" /> : <MenuIcon fontSize="large" />}
       </IconButton>
-      <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+      <Menu
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}>
         <For dataSet={links}>
           {({ href, display }) => (
-            <Link href={href} key={Math.random()}>
+            <Link
+              href={href}
+              key={Math.random()}>
               <MenuItem
                 onClick={handleClose}
                 sx={{
@@ -42,8 +47,7 @@ export default function Home() {
                   marginTop: 0,
                   marginBottom: 0,
                   borderRadius: 1,
-                }}
-              >
+                }}>
                 {display}
               </MenuItem>
             </Link>

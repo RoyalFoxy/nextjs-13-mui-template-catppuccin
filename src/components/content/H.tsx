@@ -22,7 +22,7 @@ export default function H({ children, large, small, color, underline }: H) {
   if (
     color &&
     ["error", "primary", "info", "secondary", "success", "warning"].includes(
-      color,
+      color
     )
   )
     color = `${color}-main`;
@@ -30,7 +30,9 @@ export default function H({ children, large, small, color, underline }: H) {
   if (underline) sx.textDecoration = "underline";
 
   return (
-    <Typography variant={tag} sx={sx}>
+    <Typography
+      variant={tag}
+      sx={sx}>
       {children}
     </Typography>
   );

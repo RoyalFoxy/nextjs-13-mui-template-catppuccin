@@ -6,6 +6,7 @@ import { ReactElement, forwardRef } from "react";
 import Navbar from "@navigation/bar/Navbar";
 import { SnackbarProvider } from "notistack";
 import Toast from "./Toast";
+import { transparency } from "./theme/Theme";
 
 interface LayoutView {
   children: ReactElement;
@@ -13,10 +14,10 @@ interface LayoutView {
 
 export default function LayoutView({ children }: LayoutView) {
   const theme = useTheme();
-  const selectionColor = `${theme.palette.primary.main}4c`;
+  const selectionColor = `${theme.palette.primary.main}${transparency}`;
   return (
     <SnackbarProvider
-      maxSnack={5}
+      maxSnack={3}
       Components={{
         info: forwardRef(Toast),
         default: forwardRef(Toast),
@@ -25,15 +26,15 @@ export default function LayoutView({ children }: LayoutView) {
         warning: forwardRef(Toast),
       }}
       autoHideDuration={5000}
-      transitionDuration={theme.transitions.duration.standard}
-    >
+      transitionDuration={theme.transitions.duration.standard}>
       <Navbar />
       <Box
-        sx={{ display: "flex", justifyContent: "center", marginTop: "7rem" }}
-      >
+        sx={{ display: "flex", justifyContent: "center", marginTop: "7rem" }}>
         <Box sx={{ width: "calc(100vw - var(--margin) * 2)" }}>{children}</Box>
       </Box>
-      <style global jsx>{`
+      <style
+        global
+        jsx>{`
         *::selection {
           background: ${selectionColor};
         }

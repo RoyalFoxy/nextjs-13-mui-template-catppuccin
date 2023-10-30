@@ -1,5 +1,5 @@
-import { experimental_extendTheme as extendTheme } from "@mui/material";
 import data from "@/../package.json";
+import { experimental_extendTheme as extendTheme } from "@mui/material";
 
 const mocha = {
   rosewater: "#f5e0dc",
@@ -59,7 +59,7 @@ const latte = {
   crust: "#dce0e8",
 };
 
-const transparency = "4c";
+export const transparency = "4c";
 
 const theme = extendTheme({
   colorSchemes: {

@@ -13,8 +13,7 @@ export default function Navbar() {
         backdropFilter: "blur(var(--blur))",
         WebkitBackdropFilter: "blur(var(--blur))",
         padding: "1rem var(--margin)",
-      }}
-    >
+      }}>
       <Toolbar sx={{ display: "flex", flexDirection: "row" }}>
         <MenuButton />
         <Box sx={{ marginLeft: 1 }}>

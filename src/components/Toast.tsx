@@ -1,29 +1,41 @@
-import { CSSProperties, ForwardedRef } from "react";
+import { Alert, useTheme } from "@mui/material";
+import { CSSProperties, ForwardedRef, useMemo } from "react";
 
-import { Alert } from "@mui/material";
+import interpolateColor from "@/interpolateColor";
+import { transparency } from "./theme/Theme";
 import { useSnackbar } from "notistack";
 
 interface Toast {
   id: number;
   variant: "success" | "info" | "warning" | "error";
   message: string;
-  persist: false;
+  persist: boolean;
   style: CSSProperties;
 }
 
 export default function Toast(
   { id, message, persist, variant, style }: Toast,
-  ref: ForwardedRef<any>,
+  ref: ForwardedRef<any>
 ) {
   const { closeSnackbar } = useSnackbar();
+  const theme = useTheme();
+
+  const color = useMemo(() => {
+    return interpolateColor(
+      theme.palette.catppuccin.crust,
+      theme.palette[variant].dark
+    );
+  }, [theme, variant]);
+
   return (
     <Alert
       key={id}
       color={variant}
       ref={ref}
       style={style}
-      onClose={() => closeSnackbar(id)}
-    >
+      severity={variant}
+      sx={{ background: `${color}${transparency}` }}
+      onClose={() => closeSnackbar(id)}>
       {message}
     </Alert>
   );

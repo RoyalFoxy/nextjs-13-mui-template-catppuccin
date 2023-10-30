@@ -1,6 +1,6 @@
 import H from "@content/H";
-import P from "@content/P";
 import Link from "@navigation/Link";
+import P from "@content/P";
 
 export default function Page() {
   return (

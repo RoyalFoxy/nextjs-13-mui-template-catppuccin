@@ -1,11 +1,11 @@
 "use client";
 
 import { LinkProps, Link as MuiLink, useTheme } from "@mui/material";
+import { usePathname, useRouter } from "next/navigation";
 
 import { PrefetchKind } from "next/dist/client/components/router-reducer/router-reducer-types";
 import { ReactNode } from "react";
 import { useContext } from "./Fade";
-import { usePathname, useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
 
 interface Link {
@@ -44,7 +44,7 @@ export default function Link({ children, href = "" }: Link) {
         event.preventDefault();
 
         const regex = new RegExp(
-          `^${href.split("?")[0].replaceAll("/", "\\/")}(\\?.*)?$`,
+          `^${href.split("?")[0].replaceAll("/", "\\/")}(\\?.*)?$`
         );
         if (regex.test(pathname)) {
           enqueueSnackbar("Clicking this link does nothing.", {
@@ -57,8 +57,7 @@ export default function Link({ children, href = "" }: Link) {
 
         ctx.isExiting = true;
         ctx.visible = false;
-      }}
-    >
+      }}>
       {children}
     </MuiLink>
   );
