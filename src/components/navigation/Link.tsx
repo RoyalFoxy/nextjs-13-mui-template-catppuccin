@@ -52,9 +52,6 @@ export default function Link({ children, href = "", noPreview }: Link) {
 
   const {
     complex,
-    enteringScreen,
-    leavingScreen,
-    short,
     shorter,
     shortest,
     standard,
