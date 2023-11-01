@@ -14,7 +14,7 @@ export default function NotFound() {
       </H>
       <P>
         I&apos;m not sure how you got here - But I&apos;m sure it&apos;s&nbsp;
-        <Span color="error">your fault.</Span>
+        <Span color="error" bold>your fault.</Span>
       </P>
       <P>
         Get back <Link href="/">Home</Link>.

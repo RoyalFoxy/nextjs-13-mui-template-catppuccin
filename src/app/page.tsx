@@ -13,7 +13,11 @@ export default function Page() {
         repudiandae animi minima corporis, architecto obcaecati perspiciatis
         recusandae et reprehenderit!
       </P>
-      <Link href="https://github.com/RoyalFoxy">Github</Link>
+      <Link href="https://github.com/RoyalFoxy">RoyalFoxy</Link>
+      <Link href="https://github.com/">Github</Link>
+      <Link href="https://youtube.com/">Youtube</Link>
+      <Link href="https://mui.com/">MUI</Link>
+      <Link href="https://twitter.com/ViralPosts5/status/1680548654199840771">Twitter</Link>
     </>
   );
 }

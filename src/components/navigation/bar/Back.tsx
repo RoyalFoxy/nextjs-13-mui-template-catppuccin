@@ -24,5 +24,11 @@ interface LinkWrapper {
 }
 
 function LinkWrapper({ href }: LinkWrapper) {
-  return <Link href={href}>cd ..</Link>;
+  return (
+    <Link
+      href={href}
+      noPreview>
+      cd ..
+    </Link>
+  );
 }

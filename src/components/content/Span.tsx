@@ -6,10 +6,11 @@ interface Span {
   children?: ReactNode;
   /** Is set into `var(--template-palette-YOUR_COLOR)` */
   color?: string;
+  bold?: boolean;
   underline?: boolean;
 }
 
-export default function Span({ children, color, underline }: Span) {
+export default function Span({ children, color, bold, underline }: Span) {
   const sx: TypographyProps["sx"] = { color: "inherit" };
 
   if (
@@ -21,6 +22,7 @@ export default function Span({ children, color, underline }: Span) {
     color = `${color}-main`;
   if (color) sx.color = `var(--template-palette-${color})`;
   if (underline) sx.textDecoration = "underline";
+  if (bold) sx.fontWeight = "bold";
 
   return (
     <Typography

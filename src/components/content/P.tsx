@@ -6,10 +6,11 @@ interface P {
   children?: ReactNode;
   /** Is set into `var(--template-palette-YOUR_COLOR)` */
   color?: string;
+  bold?: boolean;
   underline?: boolean;
 }
 
-export default function P({ children, color, underline }: P) {
+export default function P({ children, color, bold, underline }: P) {
   const sx: TypographyProps["sx"] = { marginTop: "1.5rem" };
 
   if (
@@ -21,6 +22,7 @@ export default function P({ children, color, underline }: P) {
     color = `${color}-main`;
   if (color) sx.color = `var(--template-palette-${color})`;
   if (underline) sx.textDecoration = "underline";
+  if (bold) sx.fontWeight = "bold"
 
   return (
     <Typography

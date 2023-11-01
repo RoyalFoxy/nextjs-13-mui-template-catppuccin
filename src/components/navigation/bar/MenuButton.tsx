@@ -39,7 +39,8 @@ export default function Home() {
           {({ href, display }) => (
             <Link
               href={href}
-              key={Math.random()}>
+              key={Math.random()}
+              noPreview>
               <MenuItem
                 onClick={handleClose}
                 sx={{
