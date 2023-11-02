@@ -3,11 +3,9 @@
 import {
   Box,
   Card,
-  Fade,
   LinkProps,
   Link as MuiLink,
   Popover,
-  Skeleton,
   Typography,
   useTheme,
 } from "@mui/material";
@@ -32,9 +30,9 @@ interface Link {
 
 type Timeout = NodeJS.Timeout;
 
-const PREVIEW_WIDTH = 350;
-const IMAGE_WIDTH = PREVIEW_WIDTH;
-const IMAGE_HEIGHT = 150;
+export const PREVIEW_WIDTH = 350;
+export const IMAGE_WIDTH = PREVIEW_WIDTH;
+export const IMAGE_HEIGHT = 150;
 
 export default function Link({ children, href = "", noPreview }: Link) {
   const [showPreview, setShowPreview] = useState(false);

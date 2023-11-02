@@ -3,6 +3,7 @@
 import { Button } from "@mui/material";
 import P from "@/components/content/P";
 import { useSnackbar } from "notistack";
+import Link from "@/components/navigation/Link";
 
 export default function Page() {
   const { enqueueSnackbar } = useSnackbar();
@@ -33,6 +34,8 @@ export default function Page() {
         }}>
         Info
       </Button>
+      <Link href="/">Home</Link>&nbsp;
+      <Link href="/about">About</Link>
       <P>
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores ipsam
         vero quo dolores commodi hic saepe doloremque modi, voluptates

@@ -11,6 +11,13 @@ import LayoutView from "@components/LayoutView";
 import { ReactElement } from "react";
 import ThemeRegistry from "@theme/ThemeRegistry";
 import prefersDarkMode from "@/utils/prefersDarkMode";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  openGraph: {
+    images: ["/api/image"],
+  },
+};
 
 interface Layout {
   children: ReactElement;

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { load } from "cheerio";
+import { writeFileSync } from "fs";
 
 export async function POST(req: NextRequest) {
   // const entries = req.headers.entries();
@@ -34,15 +35,22 @@ export async function POST(req: NextRequest) {
 
   const headers = new Headers();
 
-  const origin = req.headers.get("origin");
-  if (origin) headers.set("origin", origin);
+  [
+    "origin",
+    "user-agent",
+    "accept",
+    "connection",
+    "accept-encoding",
+    "host",
+    "sec-ch-prefers-color-scheme",
+  ].map((name) => {
+    const value = req.headers.get(name);
+    if (value) headers.set(name, value);
+  });
 
-  const userAgent = req.headers.get("user-agent");
-  if (userAgent) headers.set("user-agent", userAgent);
-
-  const response = await fetch(preview, { headers: headers });
-
-  const $ = load(await response.text());
+  const response = await fetch(preview, { headers });
+  const html = await response.text();
+  const $ = load(html);
 
   const metadata = {
     title:

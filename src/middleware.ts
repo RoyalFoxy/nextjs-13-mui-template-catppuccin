@@ -9,7 +9,8 @@ export function middleware(request: Request) {
 
   requestHeaders.set("x-url", request.url);
 
-  if (!engineIsBlink) return NextResponse.next();
+  if (!engineIsBlink)
+    return NextResponse.next({ request: { headers: requestHeaders } });
 
   if (requestHeaders.get("sec-ch-prefers-color-scheme"))
     return NextResponse.next({
