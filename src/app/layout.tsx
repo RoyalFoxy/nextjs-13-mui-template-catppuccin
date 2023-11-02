@@ -4,11 +4,13 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
-import { FadeContext } from "@/components/navigation/FadeContext";
+import { FadeContext } from "@navigation/FadeContext";
 import GlobalContext from "@/globalContext";
+import { KeyboardContext } from "@components/keyboard/KeyboardContext";
 import LayoutView from "@components/LayoutView";
 import { ReactElement } from "react";
 import ThemeRegistry from "@theme/ThemeRegistry";
+import prefersDarkMode from "@/utils/prefersDarkMode";
 
 interface Layout {
   children: ReactElement;
@@ -19,9 +21,13 @@ export default function Layout({ children }: Layout) {
     <html lang="en">
       <body>
         <GlobalContext>
-          <ThemeRegistry options={{ key: "mui", prepend: true }}>
+          <ThemeRegistry
+            options={{ key: "mui", prepend: true }}
+            serverDarkMode={prefersDarkMode()}>
             <FadeContext>
-              <LayoutView>{children}</LayoutView>
+              <KeyboardContext>
+                <LayoutView>{children}</LayoutView>
+              </KeyboardContext>
             </FadeContext>
           </ThemeRegistry>
         </GlobalContext>

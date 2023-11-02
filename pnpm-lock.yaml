@@ -23,6 +23,9 @@ dependencies:
   '@mui/material':
     specifier: ^5.14.13
     version: 5.14.13(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.0.0)(react-dom@18.2.0)(react@18.2.0)
+  '@types/ua-parser-js':
+    specifier: ^0.7.38
+    version: 0.7.38
   cheerio:
     specifier: 1.0.0-rc.12
     version: 1.0.0-rc.12
@@ -44,6 +47,9 @@ dependencies:
   next:
     specifier: 14.0.0
     version: 14.0.0(react-dom@18.2.0)(react@18.2.0)
+  nookies:
+    specifier: ^2.5.2
+    version: 2.5.2
   notistack:
     specifier: ^3.0.1
     version: 3.0.1(csstype@3.1.2)(react-dom@18.2.0)(react@18.2.0)
@@ -56,6 +62,9 @@ dependencies:
   sharp:
     specifier: ^0.32.6
     version: 0.32.6
+  ua-parser-js:
+    specifier: ^1.0.37
+    version: 1.0.37
 
 devDependencies:
   '@types/node':
@@ -682,6 +691,10 @@ packages:
   /@types/scheduler@0.16.4:
     resolution: {integrity: sha512-2L9ifAGl7wmXwP4v3pN4p2FLhD0O1qsJpvKmNin5VA8+UvNVb447UDaAEV6UdrkA+m/Xs58U1RFps44x6TFsVQ==}
 
+  /@types/ua-parser-js@0.7.38:
+    resolution: {integrity: sha512-59CA5oavBEWSNLtS/BChj9xntiWMsIf9IytjxmBo9OuZEYuRzRf3K1ARzFPlXTOz5Zm2wXI38AP9RlLqDYMToQ==}
+    dev: false
+
   /@typescript-eslint/parser@6.7.5(eslint@8.0.0)(typescript@5.0.2):
     resolution: {integrity: sha512-bIZVSGx2UME/lmhLcjdVc7ePBwn7CLqKarUBL4me1C5feOd663liTGjMBGVcGr+BhnSLeP4SgwdvNnnkbIdkCw==}
     engines: {node: ^16.0.0 || >=18.0.0}
@@ -1111,6 +1124,11 @@ packages:
 
   /convert-source-map@1.9.0:
     resolution: {integrity: sha512-ASFBup0Mz1uyiIjANan1jzLQami9z1PoYSZCiiYW2FczPbenXc45FZdBZLzOT+r6+iciuEModtmCti+hjaAk0A==}
+    dev: false
+
+  /cookie@0.4.2:
+    resolution: {integrity: sha512-aSWTXFzaKWkvHO1Ny/s+ePFpvKsPnjc551iI41v3ny/ow6tBG5Vd+FuqGNhh1LxOmVzOlGUriIlOaokOvhaStA==}
+    engines: {node: '>= 0.6'}
     dev: false
 
   /cosmiconfig@7.1.0:
@@ -2452,6 +2470,13 @@ packages:
     resolution: {integrity: sha512-+eawOlIgy680F0kBzPUNFhMZGtJ1YmqM6l4+Crf4IkImjYrO/mqPwRMh352g23uIaQKFItcQ64I7KMaJxHgAVA==}
     dev: false
 
+  /nookies@2.5.2:
+    resolution: {integrity: sha512-x0TRSaosAEonNKyCrShoUaJ5rrT5KHRNZ5DwPCuizjgrnkpE5DRf3VL7AyyQin4htict92X1EQ7ejDbaHDVdYA==}
+    dependencies:
+      cookie: 0.4.2
+      set-cookie-parser: 2.6.0
+    dev: false
+
   /notistack@3.0.1(csstype@3.1.2)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-ntVZXXgSQH5WYfyU+3HfcXuKaapzAJ8fBLQ/G618rn3yvSzEbnOB8ZSOwhX+dAORy/lw+GC2N061JA0+gYWTVA==}
     engines: {node: '>=12.0.0', npm: '>=6.0.0'}
@@ -2848,6 +2873,10 @@ packages:
     dependencies:
       lru-cache: 6.0.0
 
+  /set-cookie-parser@2.6.0:
+    resolution: {integrity: sha512-RVnVQxTXuerk653XfuliOxBP81Sf0+qfQE73LIYKcyMYHG94AuH0kgrQpRDuTZnSmjpysHmzxJXKNfa6PjFhyQ==}
+    dev: false
+
   /set-function-name@2.0.1:
     resolution: {integrity: sha512-tMNCiqYVkXIZgc2Hnoy2IvC/f8ezc5koaRFkCjrpWzGpCd3qbZXPzVy9MAZzK1ch/X0jvSkojys3oqJN0qCmdA==}
     engines: {node: '>= 0.4'}
@@ -3187,6 +3216,10 @@ packages:
     engines: {node: '>=12.20'}
     hasBin: true
     dev: true
+
+  /ua-parser-js@1.0.37:
+    resolution: {integrity: sha512-bhTyI94tZofjo+Dn8SN6Zv8nBDvyXTymAdM3LDI/0IboIUwTu1rEhW7v2TfiVsoYWgkQ4kOVqnI8APUFbIQIFQ==}
+    dev: false
 
   /unbox-primitive@1.0.2:
     resolution: {integrity: sha512-61pPlCD9h51VoreyJ0BReideM3MDKMKnh6+V9L08331ipq6Q8OFXZYiqP6n/tbHx4s5I9uRhcye6BrbkizkBDw==}

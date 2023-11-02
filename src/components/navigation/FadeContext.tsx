@@ -4,7 +4,7 @@ import { Box, Fade as MuiFade, useTheme } from "@mui/material";
 import {
   ReactElement,
   createContext,
-  useContext as useCtx,
+  useContext,
   useEffect,
   useState,
 } from "react";
@@ -19,14 +19,14 @@ interface Context {
 const context = createContext<Context>({} as Context);
 
 export function useFadeContext() {
-  return useCtx(context);
+  return useContext(context);
 }
 
-interface Fade {
+interface FadeContext {
   children: ReactElement;
 }
 
-export function FadeContext({ children }: Fade) {
+export function FadeContext({ children }: FadeContext) {
   const [getVisible, setVisible] = useState(false);
   const [getIsExiting, setIsExiting] = useState(false);
   const [getNextHref, setNextHref] = useState("");

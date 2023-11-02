@@ -20,6 +20,9 @@ import { useFadeContext } from "./FadeContext";
 import { useSnackbar } from "notistack";
 import { Preview } from "@/app/api/preview/route";
 import { transparency } from "../theme/Theme";
+import { useKeyPressed, useKeyboardContext } from "../keyboard/KeyboardContext";
+import useCookies from "../cookies/useCookies";
+import { WEEK, fromToday } from "@/time";
 
 interface Link {
   href?: string;
@@ -27,35 +30,33 @@ interface Link {
   noPreview?: boolean;
 }
 
+type Timeout = NodeJS.Timeout;
+
 const PREVIEW_WIDTH = 350;
 const IMAGE_WIDTH = PREVIEW_WIDTH;
 const IMAGE_HEIGHT = 150;
 
 export default function Link({ children, href = "", noPreview }: Link) {
   const [showPreview, setShowPreview] = useState(false);
+
   const [loadingState, setLoadingState] = useState<"loading" | "loaded" | null>(
     null
   );
-  const [currentTimeout, setCurrentTimeout] = useState<NodeJS.Timeout | null>(
-    null
-  );
-  const [anchorEl, setAnchorEl] = useState<HTMLAnchorElement | null>(null);
-  const [previewState, setPreviewState] = useState<Preview | null>(null);
-
   const [hovering, setHovering] = useState({ link: false, preview: false });
 
-  const ctx = useFadeContext();
+  const [previewState, setPreviewState] = useState<Preview | null>(null);
+
+  const [currentTimeout, setCurrentTimeout] = useState<Timeout | null>(null);
+  const [anchorEl, setAnchorEl] = useState<HTMLAnchorElement | null>(null);
+
+  const fadeCtx = useFadeContext();
   const router = useRouter();
   const theme = useTheme();
   const pathname = usePathname();
   const { enqueueSnackbar } = useSnackbar();
+  const metaPressed = useKeyPressed("MetaLeft");
 
-  const {
-    complex,
-    shorter,
-    shortest,
-    standard,
-  } = theme.transitions.duration;
+  const { complex, shorter, standard } = theme.transitions.duration;
 
   const linkProps: LinkProps = {};
 
@@ -66,9 +67,30 @@ export default function Link({ children, href = "", noPreview }: Link) {
     linkProps.rel = "noopener noreferrer";
   }
 
+  const [getCookie, setCookie] = useCookies();
+  const noPreviewCookieName = "no-preview.warning";
+
   useEffect(() => {
-    const shouldShowLoading = hovering.link || hovering.preview;
-    const shouldShow = shouldShowLoading && !!previewState;
+    const isHovering = hovering.link || hovering.preview;
+    const shouldShow = isHovering && !!previewState && metaPressed;
+
+    if (
+      isHovering &&
+      metaPressed &&
+      !!noPreview &&
+      !getCookie<boolean>(noPreviewCookieName)
+    ) {
+      enqueueSnackbar(
+        "There is no preview for some links. This is indicated by the red blinking animation.",
+        {
+          variant: "warning",
+          persist: true,
+          onClose: () =>
+            setCookie(noPreviewCookieName, true, { expires: fromToday(WEEK) }),
+        }
+      );
+      return;
+    }
 
     let timeout1 = setTimeout(
       () => setShowPreview(shouldShow),
@@ -79,14 +101,14 @@ export default function Link({ children, href = "", noPreview }: Link) {
     if (hovering.link && !previewState) loadingState = "loading";
     else if (hovering.link) loadingState = "loaded";
 
+    if (!metaPressed) loadingState = null;
+
     let timeout2: any = null;
 
     if (loadingState) {
       timeout2 = setTimeout(
-        () => {
-          setLoadingState(loadingState);
-        },
-        loadingState === "loading" ? shortest : complex
+        () => setLoadingState(loadingState),
+        loadingState === "loading" ? standard : complex
       );
     } else setLoadingState(loadingState);
 
@@ -96,9 +118,21 @@ export default function Link({ children, href = "", noPreview }: Link) {
       clearTimeout(timeout1);
       if (timeout2) clearTimeout(timeout2);
     };
+  }, [
+    hovering,
+    previewState,
+    metaPressed,
+    complex,
+    standard,
+    shorter,
+    noPreview,
+    enqueueSnackbar,
+    getCookie,
+    setCookie,
+  ]);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hovering, previewState]);
+  const overlay = `${theme.palette.catppuccin.overlay0}${transparency}`;
+  const transparent = `#00000000`;
 
   return (
     <>
@@ -111,9 +145,9 @@ export default function Link({ children, href = "", noPreview }: Link) {
           },
         }}
         href={href}
-        onKeyDown={(e) => console.log(e)}
         onMouseEnter={(e) => {
           if (!newTab) router.prefetch(href, { kind: PrefetchKind.FULL });
+          setHovering((hovering) => ({ ...hovering, link: true }));
           if (noPreview) return;
 
           setAnchorEl(e.currentTarget);
@@ -126,21 +160,18 @@ export default function Link({ children, href = "", noPreview }: Link) {
               .then(async (response) => {
                 setPreviewState(await response.json());
               })
-              .catch((e) => {
-                console.log(e);
+              .catch((error) => {
+                console.error(error);
               });
-
-          setHovering((hovering) => ({ ...hovering, link: true }));
         }}
         onMouseLeave={() => {
+          setHovering((hovering) => ({ ...hovering, link: false }));
           if (noPreview) return;
 
           if (currentTimeout) {
             clearTimeout(currentTimeout);
             setCurrentTimeout(null);
           }
-
-          setHovering((hovering) => ({ ...hovering, link: false }));
         }}
         onClick={(event) => {
           if (newTab) return;
@@ -150,61 +181,97 @@ export default function Link({ children, href = "", noPreview }: Link) {
             `^${href.split("?")[0].replaceAll("/", "\\/")}(\\?.*)?$`
           );
           if (regex.test(pathname)) {
-            enqueueSnackbar("Clicking this link does nothing.", {
-              variant: "info",
-            });
+            enqueueSnackbar("Clicking this link does nothing.");
             return;
           }
 
-          setShowPreview(false)
+          setShowPreview(false);
 
-          ctx.nextHref = href;
+          fadeCtx.nextHref = href;
 
-          ctx.isExiting = true;
-          ctx.visible = false;
+          fadeCtx.isExiting = true;
+          fadeCtx.visible = false;
         }}>
         <style jsx>{`
           @keyframes loading-animation {
             0% {
-              background: #00000000;
+              background-color: ${transparent};
             }
             50% {
-              background: ${theme.palette.catppuccin.overlay0}${transparency};
+              background-color: ${overlay};
             }
             100% {
-              background: #00000000;
+              background-color: ${transparent};
+            }
+          }
+
+          @keyframes no-preview-blink {
+            0% {
+              color: var(--template-palette-primary-main);
+            }
+            25% {
+              color: var(--template-palette-error-main);
+            }
+            50% {
+              color: var(--template-palette-primary-main);
+            }
+            75% {
+              color: var(--template-palette-error-main);
+            }
+            100% {
+              color: var(--template-palette-primary-main);
             }
           }
         `}</style>
-        <span
-          style={{
-            background:
-              loadingState === "loaded"
-                ? `${theme.palette.catppuccin.overlay0}${transparency}`
-                : "#00000000",
-            transition: `background ${standard}ms`,
-            animation:
-              loadingState === "loading"
-                ? `loading-animation ${complex * 2}ms ease-in-out infinite`
-                : "",
-            padding: "0.25rem",
-            margin: "-0.25rem",
-            borderRadius: theme.shape.borderRadius,
-            backgroundClip: "content-box",
-          }}>
-          {children}
-          {newTab && (
-            <OpenInNewIcon
-              sx={{
-                width: "1rem",
-                height: "1rem",
-                verticalAlign: "-7.5%",
-                color: "var(--template-palette-primary-dark)",
-                transition: `color ${standard}ms ease`,
-              }}
-            />
-          )}
-        </span>
+        {noPreview ? (
+          <span
+            style={{
+              animation:
+                hovering.link && metaPressed
+                  ? `no-preview-blink ${complex * 1.5}ms ease-in-out`
+                  : "",
+            }}>
+            {children}
+            {newTab && (
+              <OpenInNewIcon
+                sx={{
+                  width: "1rem",
+                  height: "1rem",
+                  verticalAlign: "-7.5%",
+                  color: "var(--template-palette-primary-dark)",
+                  transition: `color ${standard}ms ease`,
+                }}
+              />
+            )}
+          </span>
+        ) : (
+          <span
+            style={{
+              backgroundColor:
+                loadingState === "loaded" ? overlay : transparent,
+              transition: `background ${standard}ms`,
+              animation:
+                loadingState === "loading"
+                  ? `loading-animation ${complex * 2}ms ease-in-out infinite`
+                  : "",
+              padding: "0.5rem",
+              margin: "-0.5rem",
+              borderRadius: theme.shape.borderRadius,
+            }}>
+            {children}
+            {newTab && (
+              <OpenInNewIcon
+                sx={{
+                  width: "1rem",
+                  height: "1rem",
+                  verticalAlign: "-7.5%",
+                  color: "var(--template-palette-primary-dark)",
+                  transition: `color ${standard}ms ease`,
+                }}
+              />
+            )}
+          </span>
+        )}
       </MuiLink>
       {!noPreview && (
         <Popover

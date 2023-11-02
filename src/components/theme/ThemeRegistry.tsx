@@ -11,11 +11,13 @@ import theme from "@theme/Theme";
 import { useServerInsertedHTML } from "next/navigation";
 
 interface ThemeRegistry {
+  serverDarkMode: boolean;
   options: Options;
   children: ReactElement;
 }
 
 export default function ThemeRegistry({
+  serverDarkMode,
   options: { key, prepend },
   children,
 }: ThemeRegistry) {
@@ -63,9 +65,11 @@ export default function ThemeRegistry({
 
   return (
     <CacheProvider value={cache}>
-      <CssVarsProvider theme={theme}>
+      <CssVarsProvider theme={theme} defaultMode={serverDarkMode ? "dark" : "light"}>
         <CssBaseline />
-        <InnerThemeRegistry>{children}</InnerThemeRegistry>
+        <InnerThemeRegistry serverDarkMode={serverDarkMode}>
+          {children}
+        </InnerThemeRegistry>
       </CssVarsProvider>
     </CacheProvider>
   );

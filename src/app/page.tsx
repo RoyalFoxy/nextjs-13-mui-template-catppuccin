@@ -17,7 +17,6 @@ export default function Page() {
       <Link href="https://github.com/">Github</Link>
       <Link href="https://youtube.com/">Youtube</Link>
       <Link href="https://mui.com/">MUI</Link>
-      <Link href="https://twitter.com/ViralPosts5/status/1680548654199840771">Twitter</Link>
     </>
   );
 }

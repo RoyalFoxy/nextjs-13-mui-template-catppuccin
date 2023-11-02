@@ -3,18 +3,25 @@
 import { ReactElement, useEffect } from "react";
 
 import { useColorScheme } from "@mui/material";
-import useMediaQuery from "@/utils/useMediaQuery";
 import Mocha from "@components/HLJS/themes/Mocha";
 import Latte from "@components/HLJS/themes/Mocha";
+import usePrefersDarkMode from "@utils/usePrefersDarkMode";
 
 interface InnerThemeRegistry {
+  serverDarkMode: boolean;
   children: ReactElement;
 }
 
-export default function InnerThemeRegistry({ children }: InnerThemeRegistry) {
-  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+export default function InnerThemeRegistry({
+  children,
+  serverDarkMode,
+}: InnerThemeRegistry) {
+  const prefersDarkMode = usePrefersDarkMode(serverDarkMode);
 
   const scheme = useColorScheme();
+  const mode = getPreferredMode(prefersDarkMode);
+  if (!(scheme.mode == mode)) scheme.setMode(mode);
+
   useEffect(() => {
     const mode = getPreferredMode(prefersDarkMode);
     if (scheme.mode == mode) return;
