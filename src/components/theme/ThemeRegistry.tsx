@@ -65,7 +65,9 @@ export default function ThemeRegistry({
 
   return (
     <CacheProvider value={cache}>
-      <CssVarsProvider theme={theme} defaultMode={serverDarkMode ? "dark" : "light"}>
+      <CssVarsProvider
+        theme={theme}
+        defaultMode={serverDarkMode ? "dark" : "light"}>
         <CssBaseline />
         <InnerThemeRegistry serverDarkMode={serverDarkMode}>
           {children}

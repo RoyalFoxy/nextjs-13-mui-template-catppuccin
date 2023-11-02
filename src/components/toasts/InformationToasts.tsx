@@ -1,7 +1,8 @@
-import { useSnackbar } from "notistack";
-import useCookies from "../cookies/useCookies";
-import IsMobile from "../keyboard/isMobile";
 import { WEEK, fromToday } from "@/time";
+
+import IsMobile from "../keyboard/isMobile";
+import useCookies from "../cookies/useCookies";
+import { useSnackbar } from "notistack";
 
 interface InformationToast {
   name: string;

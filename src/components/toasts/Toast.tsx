@@ -1,13 +1,13 @@
 import { Alert, useTheme } from "@mui/material";
-import { CSSProperties, ForwardedRef, useMemo, ReactNode } from "react";
+import { CSSProperties, ForwardedRef, ReactNode, useMemo } from "react";
+import KeyNames, { KeyValue } from "../keyboard/useKeyName";
 
+import IsMobile from "../keyboard/isMobile";
+import KeyboardCommandKeyIcon from "@mui/icons-material/KeyboardCommandKey";
+import KeyboardOptionKeyIcon from "@mui/icons-material/KeyboardOptionKey";
 import interpolateColor from "@/utils/interpolateColor";
 import { transparency } from "../theme/Theme";
 import { useSnackbar } from "notistack";
-import IsMobile from "../keyboard/isMobile";
-import KeyNames, { KeyValue } from "../keyboard/useKeyName";
-import KeyboardOptionKeyIcon from "@mui/icons-material/KeyboardOptionKey";
-import KeyboardCommandKeyIcon from "@mui/icons-material/KeyboardCommandKey";
 
 interface Toast {
   id: number;

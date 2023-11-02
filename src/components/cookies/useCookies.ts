@@ -1,5 +1,6 @@
-import nookies from "nookies";
 import { useCallback, useState } from "react";
+
+import nookies from "nookies";
 
 /**
  * ! Getting a cookie is NOT reactive

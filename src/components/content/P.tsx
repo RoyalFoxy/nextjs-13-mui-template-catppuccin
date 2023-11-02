@@ -22,7 +22,7 @@ export default function P({ children, color, bold, underline }: P) {
     color = `${color}-main`;
   if (color) sx.color = `var(--template-palette-${color})`;
   if (underline) sx.textDecoration = "underline";
-  if (bold) sx.fontWeight = "bold"
+  if (bold) sx.fontWeight = "bold";
 
   return (
     <Typography

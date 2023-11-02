@@ -2,9 +2,9 @@
 
 import { ReactElement, useEffect } from "react";
 
-import { useColorScheme } from "@mui/material";
-import Mocha from "@components/HLJS/themes/Mocha";
 import Latte from "@components/HLJS/themes/Mocha";
+import Mocha from "@components/HLJS/themes/Mocha";
+import { useColorScheme } from "@mui/material";
 import usePrefersDarkMode from "@utils/usePrefersDarkMode";
 
 interface InnerThemeRegistry {

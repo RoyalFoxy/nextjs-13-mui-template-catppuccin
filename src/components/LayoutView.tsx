@@ -3,11 +3,11 @@
 import { Box, useTheme } from "@mui/material";
 import { ReactElement, forwardRef } from "react";
 
+import InformationToasts from "./toasts/InformationToasts";
 import Navbar from "@navigation/bar/Navbar";
 import { SnackbarProvider } from "notistack";
 import Toast from "./toasts/Toast";
 import { transparency } from "./theme/Theme";
-import InformationToasts from "./toasts/InformationToasts";
 
 interface LayoutView {
   children: ReactElement;
