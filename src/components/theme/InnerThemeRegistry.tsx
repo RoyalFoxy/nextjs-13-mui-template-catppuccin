@@ -21,6 +21,11 @@ export default function InnerThemeRegistry({
   const scheme = useColorScheme();
   const mode = getPreferredMode(prefersDarkMode);
 
+  // This is a fix for when a user changes their theme mode
+  useEffect(() => {
+    if (scheme.mode !== mode) window.location.reload();
+  }, [scheme.mode, mode]);
+
   useEffect(() => {
     const mode = getPreferredMode(prefersDarkMode);
     if (scheme.mode == mode) return;
