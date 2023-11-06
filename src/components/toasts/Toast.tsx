@@ -2,7 +2,7 @@ import { Alert, useTheme } from "@mui/material";
 import { CSSProperties, ForwardedRef, ReactNode, useMemo } from "react";
 import KeyNames, { KeyValue } from "../keyboard/useKeyName";
 
-import IsMobile from "../keyboard/isMobile";
+import IsMobile from "../../utils/userAgent.ts/isMobile";
 import KeyboardCommandKeyIcon from "@mui/icons-material/KeyboardCommandKey";
 import KeyboardOptionKeyIcon from "@mui/icons-material/KeyboardOptionKey";
 import interpolateColor from "@/utils/interpolateColor";

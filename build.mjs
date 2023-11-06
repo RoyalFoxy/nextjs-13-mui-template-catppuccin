@@ -32,6 +32,7 @@ async function main() {
   await imageStep();
   await gameStep();
   await componentStep();
+  cpSync("assets/fonts", "public/assets/fonts", { recursive: true });
 }
 
 async function videoStep() {

@@ -19,12 +19,12 @@ export default function Page() {
         repudiandae animi minima corporis, architecto obcaecati perspiciatis
         recusandae et reprehenderit!
       </P>
-      <Link href="/">Home</Link>
-      <Link href="/about">About</Link>
-      {/* <Link href="https://github.com/RoyalFoxy">RoyalFoxy</Link>
-      <Link href="https://github.com/">Github</Link>
-      <Link href="https://youtube.com/">Youtube</Link>
-      <Link href="https://mui.com/">MUI</Link> */}
+      <Link href="/">Home</Link>&nbsp;
+      <Link href="/about">About</Link>&nbsp;
+      <Link href="https://github.com/RoyalFoxy">RoyalFoxy</Link>&nbsp;
+      <Link href="https://github.com/">Github</Link>&nbsp;
+      <Link href="https://youtube.com/">Youtube</Link>&nbsp;
+      <Link href="https://mui.com/">MUI</Link>
     </>
   );
 }

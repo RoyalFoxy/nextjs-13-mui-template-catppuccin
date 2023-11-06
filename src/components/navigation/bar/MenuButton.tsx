@@ -16,10 +16,8 @@ export default function Home() {
   const handleClose = () => setAnchorEl(null);
 
   const links = [
-    {
-      display: "Home",
-      href: "/",
-    },
+    { display: "Home", href: "/" },
+    { display: "About", href: "/about" },
   ];
 
   return (

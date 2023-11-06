@@ -20,7 +20,6 @@ export default function InnerThemeRegistry({
 
   const scheme = useColorScheme();
   const mode = getPreferredMode(prefersDarkMode);
-  if (!(scheme.mode == mode)) scheme.setMode(mode);
 
   useEffect(() => {
     const mode = getPreferredMode(prefersDarkMode);

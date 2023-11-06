@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { ReactNode, useEffect, useState } from "react";
 import { WEEK, fromToday } from "@/time";
-import { useKeyPressed, useKeyboardContext } from "../keyboard/KeyboardContext";
+import { useKeyPressed } from "../keyboard/KeyboardContext";
 import { usePathname, useRouter } from "next/navigation";
 
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
@@ -156,7 +156,8 @@ export default function Link({ children, href = "", noPreview }: Link) {
               method: "POST",
             })
               .then(async (response) => {
-                setPreviewState(await response.json());
+                const previewState: Preview = await response.json();
+                setPreviewState(previewState);
               })
               .catch((error) => {
                 console.error(error);
@@ -313,7 +314,7 @@ export default function Link({ children, href = "", noPreview }: Link) {
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={previewState?.image}
-                      alt=""
+                      alt="Preview image"
                       width={IMAGE_WIDTH}
                       height={IMAGE_HEIGHT}
                       style={{ objectFit: "cover", display: "block" }}

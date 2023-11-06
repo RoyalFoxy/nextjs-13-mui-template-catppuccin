@@ -9,6 +9,12 @@ export async function GET(req: NextRequest) {
 
   const palette = mode === "dark" ? mocha : latte;
 
+  const monocraft = await (
+    await fetch(
+      `${req.nextUrl.protocol}//${req.nextUrl.host}/assets/fonts/Monocraft.otf`
+    )
+  ).arrayBuffer();
+
   return new ImageResponse(
     (
       <div
@@ -23,13 +29,27 @@ export async function GET(req: NextRequest) {
           style={{
             margin: "auto",
             textAlign: "center",
-            fontSize: "5rem",
-            color: palette.text
+            fontSize: "10rem",
+            color: palette.text,
+            fontFamily: "Monocraft",
           }}>
-          RoyalFoxy
+          royalfoxy.xyz
+          <img
+            style={{ height: "35%", marginLeft: "2rem" }}
+            src={`${req.nextUrl.protocol}//${req.nextUrl.host}/icon/android-chrome-512x512.png`}
+          />
         </p>
       </div>
     ),
-    { width: 350 * SCALER, height: 150 * SCALER }
+    {
+      width: 350 * SCALER,
+      height: 150 * SCALER,
+      fonts: [
+        {
+          name: "Monocraft",
+          data: monocraft,
+        },
+      ],
+    }
   );
 }
