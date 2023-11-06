@@ -14,12 +14,23 @@ interface Toast {
   variant: "success" | "info" | "warning" | "error" | "default";
   message: string;
   persist: boolean;
-  hideIconVariant: boolean;
   style: CSSProperties;
 }
 
+const iconStyle = {
+  width: "1rem",
+  height: "1rem",
+  verticalAlign: "-9%",
+  alignSelf: "center",
+};
+
+const icons: { [key: string]: ReactNode } = {
+  command: <KeyboardCommandKeyIcon sx={iconStyle} />,
+  option: <KeyboardOptionKeyIcon sx={iconStyle} />,
+};
+
 export default function Toast(
-  { id, message, persist, variant, style, hideIconVariant }: Toast,
+  { id, message, persist, variant, style }: Toast,
   ref: ForwardedRef<any>
 ) {
   const { closeSnackbar } = useSnackbar();
@@ -38,52 +49,25 @@ export default function Toast(
 
   let content: any = null;
 
-  if (!hideIconVariant) {
-    const isMobile = IsMobile();
-    const keyMap = KeyNames();
+  const isMobile = IsMobile();
+  const keyMap = KeyNames();
 
-    if (!isMobile) {
-      const entries = Object.entries(keyMap);
-      content = message.split(" ").map((word, index) => {
-        let replaced: any = "";
-        entries.forEach(([key, value]) => {
-          if (word === key) word = value as string;
+  if (!isMobile) {
+    const entries = Object.entries(keyMap);
+    content = message.split(" ").map((word) => {
+      let replaced: any = "";
+      entries.forEach(([key, value]) => {
+        if (word === key) word = value as string;
 
-          if (word === "command")
-            replaced = (
-              <span>
-                <KeyboardCommandKeyIcon
-                  sx={{
-                    width: "1rem",
-                    height: "1rem",
-                    verticalAlign: "-9%",
-                    alignSelf: "center",
-                  }}
-                />
-                &nbsp;
-              </span>
-            );
-          else if (word === "option")
-            replaced = (
-              <span>
-                <KeyboardOptionKeyIcon
-                  sx={{
-                    width: "1rem",
-                    height: "1rem",
-                    verticalAlign: "-9%",
-                    alignSelf: "center",
-                  }}
-                />
-                &nbsp;
-              </span>
-            );
-          else replaced = `${word} `;
-        });
+        const icon = icons[word];
 
-        return replaced;
+        if (icon) replaced = <span>{icon}&nbsp;</span>;
+        else replaced = `${word} `;
       });
-    }
-  }
+
+      return replaced;
+    });
+  } else content = message;
 
   return (
     <Alert
