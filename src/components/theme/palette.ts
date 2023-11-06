@@ -1,4 +1,3 @@
-
 export const mocha = {
   rosewater: "#f5e0dc",
   flamingo: "#f2cdcd",

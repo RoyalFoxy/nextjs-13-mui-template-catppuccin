@@ -1,9 +1,9 @@
 "use client";
 
 import { Button } from "@mui/material";
+import Link from "@/components/navigation/Link";
 import P from "@/components/content/P";
 import { useSnackbar } from "notistack";
-import Link from "@/components/navigation/Link";
 
 export default function Page() {
   const { enqueueSnackbar } = useSnackbar();

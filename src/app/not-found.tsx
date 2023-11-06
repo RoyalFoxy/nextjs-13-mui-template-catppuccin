@@ -1,8 +1,8 @@
 import H from "@content/H";
 import Link from "@navigation/Link";
+import { Metadata } from "next";
 import P from "@content/P";
 import Span from "@content/Span";
-import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Not Found",

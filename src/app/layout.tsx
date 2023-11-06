@@ -8,11 +8,10 @@ import { FadeContext } from "@navigation/FadeContext";
 import GlobalContext from "@/globalContext";
 import { KeyboardContext } from "@components/keyboard/KeyboardContext";
 import LayoutView from "@components/LayoutView";
+import { Metadata } from "next";
 import { ReactElement } from "react";
 import ThemeRegistry from "@theme/ThemeRegistry";
 import prefersDarkMode from "@/utils/prefersDarkMode";
-import { Metadata } from "next";
-import { headers } from "next/headers";
 
 export async function generateMetadata() {
   const darkMode = prefersDarkMode();

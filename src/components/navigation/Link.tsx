@@ -11,7 +11,6 @@ import {
 } from "@mui/material";
 import { ReactNode, useEffect, useState } from "react";
 import { WEEK, fromToday } from "@/time";
-import { useKeyPressed } from "../keyboard/KeyboardContext";
 import { usePathname, useRouter } from "next/navigation";
 
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
@@ -20,6 +19,7 @@ import { Preview } from "@/app/api/preview/route";
 import { transparency } from "../theme/Theme";
 import useCookies from "../cookies/useCookies";
 import { useFadeContext } from "./FadeContext";
+import { useKeyPressed } from "../keyboard/KeyboardContext";
 import { useSnackbar } from "notistack";
 
 interface Link {

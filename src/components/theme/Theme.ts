@@ -1,6 +1,7 @@
+import { latte, mocha } from "./palette";
+
 import data from "@/../package.json";
 import { experimental_extendTheme as extendTheme } from "@mui/material";
-import { latte, mocha } from "./palette";
 
 export const transparency = "4c";
 

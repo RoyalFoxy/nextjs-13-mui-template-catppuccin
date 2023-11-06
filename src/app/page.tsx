@@ -1,7 +1,7 @@
 import H from "@content/H";
 import Link from "@navigation/Link";
-import P from "@content/P";
 import { Metadata } from "next";
+import P from "@content/P";
 
 export const metadata: Metadata = {
   title: "Home",

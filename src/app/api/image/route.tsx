@@ -1,7 +1,8 @@
 import { latte, mocha } from "@/components/theme/palette";
+
+import Image from "next/image";
 import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
-import Image from "next/image";
 
 const SCALER = 5;
 
