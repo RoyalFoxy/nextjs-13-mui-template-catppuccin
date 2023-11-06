@@ -44,6 +44,8 @@ export async function POST(req: NextRequest) {
   const html = await response.text();
   const $ = load(html);
 
+  console.log(html);
+
   const metadata: Preview = {
     title:
       $('meta[property="og:title"]').attr("content") ||
