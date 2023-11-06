@@ -76,6 +76,7 @@ async function componentStep() {
     const count = getOccurrences(fullPath);
     return { count, fullPath, source: getComponent(fullPath) };
   });
+  mkdirSync("src/data/components");
   writeFileSync("src/data/components/all.json", stringify(components));
 }
 
