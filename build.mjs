@@ -25,6 +25,8 @@ const SteamID = process.env.STEAM_ID;
 
 const env = process.env.NODE_ENV || "development";
 
+console.log(JSON.stringify(process.env, null, 2));
+
 main();
 
 async function main() {
@@ -142,7 +144,7 @@ async function getOwnedGames() {
   const response = await fetch(
     `https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=${ValveKey}&steamid=${SteamID}&include_appinfo=1&include_played_free_games=1&format=json`
   );
-  if (!response.ok) throw new Error("Couldn't fetch from data Steam");
+  if (!response.ok) throw new Error("Couldn't fetch data from Steam");
 
   const text = await response.text();
 
