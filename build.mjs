@@ -25,8 +25,6 @@ const SteamID = process.env.STEAM_ID;
 
 const env = process.env.NODE_ENV || "development";
 
-console.log(JSON.stringify(process.env, null, 2));
-
 main();
 
 async function main() {
@@ -68,6 +66,7 @@ async function gameStep() {
 
   console.log("Getting steam data");
   const ownedGamesData = await getOwnedGames();
+  mkdirSync("src/data/games");
   writeFileSync("src/data/games/games.json", stringify(ownedGamesData));
 }
 
