@@ -20,7 +20,7 @@ ffmpeg.setFfmpegPath(ffmpegPath || "");
 
 const { highlight } = hljs;
 
-const ValveKey = process.env.VALUE_KEY;
+const ValveKey = process.env.VALVE_KEY;
 const SteamID = process.env.STEAM_ID;
 
 const env = process.env.NODE_ENV || "development";
