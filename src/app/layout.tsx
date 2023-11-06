@@ -12,12 +12,19 @@ import { ReactElement } from "react";
 import ThemeRegistry from "@theme/ThemeRegistry";
 import prefersDarkMode from "@/utils/prefersDarkMode";
 import { Metadata } from "next";
+import { headers } from "next/headers";
 
-export const metadata: Metadata = {
-  openGraph: {
-    images: ["/api/image"],
-  },
-};
+export async function generateMetadata() {
+  const darkMode = prefersDarkMode();
+
+  const metadata: Metadata = {
+    openGraph: {
+      images: [`/api/image?mode=${darkMode ? "dark" : "light"}`],
+    },
+  };
+
+  return metadata;
+}
 
 interface Layout {
   children: ReactElement;

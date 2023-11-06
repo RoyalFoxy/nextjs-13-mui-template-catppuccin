@@ -1,11 +1,15 @@
 import { latte, mocha } from "@/components/theme/palette";
 import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
+import Image from "next/image";
 
 const SCALER = 5;
 
 export async function GET(req: NextRequest) {
-  const mode = req.headers.get("sec-ch-prefers-color-scheme") || "light";
+  const mode =
+    req.nextUrl.searchParams.get("mode") ||
+    req.headers.get("sec-ch-prefers-color-scheme") ||
+    "light";
 
   const palette = mode === "dark" ? mocha : latte;
 
@@ -34,6 +38,7 @@ export async function GET(req: NextRequest) {
             fontFamily: "Monocraft",
           }}>
           royalfoxy.xyz
+          {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
           <img
             style={{ height: "35%", marginLeft: "2rem" }}
             src={`${req.nextUrl.protocol}//${req.nextUrl.host}/icon/android-chrome-512x512.png`}

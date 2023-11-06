@@ -23,14 +23,9 @@ export async function POST(req: NextRequest) {
 
   if (preview.startsWith("https")) preview = preview.replace("https", "http");
 
-  console.log(preview);
-
   const headers = new Headers();
 
-  [
-    "user-agent",
-    "sec-ch-prefers-color-scheme",
-  ].map((name) => {
+  ["user-agent", "sec-ch-prefers-color-scheme"].map((name) => {
     const value = req.headers.get(name);
     if (value) headers.set(name, value);
   });
