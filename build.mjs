@@ -6,6 +6,7 @@ import {
   rmSync,
   mkdirSync,
   cpSync,
+  existsSync,
 } from "fs";
 import { join, basename } from "path";
 import hljs from "highlight.js";
@@ -66,8 +67,13 @@ async function gameStep() {
 
   console.log("Getting steam data");
   const ownedGamesData = await getOwnedGames();
-  mkdirSync("src/data/games");
-  writeFileSync("src/data/games/games.json", stringify(ownedGamesData));
+  const folder = "src/data/games"
+  rmSync(folder, {
+    force: true,
+    recursive: true,
+  })
+  mkdirSync(folder);
+  writeFileSync(`${folder}/games.json`, stringify(ownedGamesData));
 }
 
 async function componentStep() {
@@ -76,8 +82,13 @@ async function componentStep() {
     const count = getOccurrences(fullPath);
     return { count, fullPath, source: getComponent(fullPath) };
   });
-  mkdirSync("src/data/components");
-  writeFileSync("src/data/components/all.json", stringify(components));
+  const folder = "src/data/components"
+  rmSync(folder, {
+    force: true,
+    recursive: true,
+  })
+  mkdirSync(folder);
+  writeFileSync(`${folder}/all.json`, stringify(components));
 }
 
 function stringify(object) {

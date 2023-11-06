@@ -4,17 +4,6 @@ import { load } from "cheerio";
 import { writeFileSync } from "fs";
 
 export async function POST(req: NextRequest) {
-  // const entries = req.headers.entries();
-
-  // const entryArray = new Array();
-
-  // while (true) {
-  //   const entry = entries.next();
-  //   if (entry.done) break;
-  //   entryArray.push(entry.value.map((part) => `'${part}'`).join(" => "));
-  // }
-  // return NextResponse.json(entryArray);
-
   const body = await req.text();
   let parsedBody = null;
   try {
@@ -29,9 +18,10 @@ export async function POST(req: NextRequest) {
 
   let { preview }: { preview: string } = parsedBody;
 
-  if (preview.startsWith("/")) {
+  if (preview.startsWith("/"))
     preview = req.url.split("/").slice(0, 3).join("/") + preview;
-  }
+
+  if (preview.startsWith("https")) preview.replace("https", "http");
 
   const headers = new Headers();
 
