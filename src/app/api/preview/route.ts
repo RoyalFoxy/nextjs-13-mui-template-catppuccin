@@ -28,12 +28,7 @@ export async function POST(req: NextRequest) {
   const headers = new Headers();
 
   [
-    "origin",
     "user-agent",
-    "accept",
-    "connection",
-    "accept-encoding",
-    "host",
     "sec-ch-prefers-color-scheme",
   ].map((name) => {
     const value = req.headers.get(name);
@@ -43,8 +38,6 @@ export async function POST(req: NextRequest) {
   const response = await fetch(preview, { headers });
   const html = await response.text();
   const $ = load(html);
-
-  console.log(html);
 
   const metadata: Preview = {
     title:

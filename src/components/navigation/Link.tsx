@@ -356,6 +356,9 @@ export default function Link({ children, href = "", noPreview }: Link) {
                     </Typography>
                   )}
                 </Box>
+                <pre style={{ textAlign: "left" }}>
+                  {JSON.stringify(previewState, null, 2)}
+                </pre>
               </div>
             ) : (
               <div />
