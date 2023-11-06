@@ -145,7 +145,7 @@ async function getOwnedGames() {
     `https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=${ValveKey}&steamid=${SteamID}&include_appinfo=1&include_played_free_games=1&format=json`
   );
   if (!response.ok)
-    throw new Error(`Couldn't fetch data from Steam\n${response.text()}`);
+    throw new Error(`Couldn't fetch data from Steam\n${await response.text()}`);
 
   const text = await response.text();
 
