@@ -21,7 +21,9 @@ export async function POST(req: NextRequest) {
   if (preview.startsWith("/"))
     preview = req.url.split("/").slice(0, 3).join("/") + preview;
 
-  if (preview.startsWith("https")) preview.replace("https", "http");
+  if (preview.startsWith("https")) preview = preview.replace("https", "http");
+
+  console.log(preview);
 
   const headers = new Headers();
 
