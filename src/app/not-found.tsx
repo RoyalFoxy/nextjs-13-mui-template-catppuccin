@@ -7,9 +7,6 @@ import Span from "@content/Span";
 export const metadata: Metadata = {
   title: "Not Found",
   description: "I'm not sure how you got here - But I'm sure it's your fault",
-  openGraph: {
-    images: ["/api/image"],
-  },
 };
 
 export default function NotFound() {
