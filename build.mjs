@@ -38,19 +38,21 @@ async function main() {
 async function videoStep() {
   console.log("Processing videos");
   await Promise.all(
-    walkDirectory("assets/videos").map(async (file) => {
-      const filename = file.split(".").slice(0, -1).join(".");
-      const fileExtension = file.split(".").pop();
-      cpSync(
-        `assets/videos/${file}`,
-        `public/videos/${hash(filename)}.${fileExtension}`
-      );
+    readdirSync("assets/videos")
+      .filter((file) => file !== ".gitignore")
+      .map(async (file) => {
+        const filename = file.split(".").slice(0, -1).join(".");
+        const fileExtension = file.split(".").pop();
+        cpSync(
+          `assets/videos/${file}`,
+          `public/videos/${hash(filename)}.${fileExtension}`
+        );
 
-      await buildVideoImage(
-        `assets/videos/${file}`,
-        `assets/images/video.preview.${filename}.png`
-      );
-    })
+        await buildVideoImage(
+          `assets/videos/${file}`,
+          `assets/images/video.preview.${filename}.png`
+        );
+      })
   );
 }
 
