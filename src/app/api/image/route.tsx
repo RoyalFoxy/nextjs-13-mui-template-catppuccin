@@ -1,10 +1,21 @@
 import { latte, mocha } from "@/components/theme/palette";
+import { readFileSync } from "fs";
 
-import Image from "next/image";
 import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
+import { join } from "path";
 
 const SCALER = 5;
+
+const monocraftPath = join(
+  process.cwd(),
+  "public",
+  "assets",
+  "fonts",
+  "Monocraft.otf"
+);
+
+const monocraft = readFileSync(monocraftPath);
 
 export async function GET(req: NextRequest) {
   const mode =
@@ -14,11 +25,11 @@ export async function GET(req: NextRequest) {
 
   const palette = mode === "dark" ? mocha : latte;
 
-  const monocraft = await (
-    await fetch(
-      `${req.nextUrl.protocol}//${req.nextUrl.host}/assets/fonts/Monocraft.otf`
-    )
-  ).arrayBuffer();
+  // const monocraft = await (
+  //   await fetch(
+  //     `${req.nextUrl.protocol}//${req.nextUrl.host}/assets/fonts/Monocraft.otf`
+  //   )
+  // ).arrayBuffer();
 
   return new ImageResponse(
     (
