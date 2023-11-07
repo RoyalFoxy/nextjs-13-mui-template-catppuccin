@@ -1,4 +1,4 @@
-import { latte, mocha } from "@theme/palette";
+import { latteColors as latte, mochaColors as mocha } from "@theme/colors";
 
 import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
