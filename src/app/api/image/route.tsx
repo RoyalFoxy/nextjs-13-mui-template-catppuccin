@@ -7,6 +7,13 @@ import { join } from "path";
 
 const SCALER = 2;
 
+const iconPath = join(
+  process.cwd(),
+  "public",
+  "icon",
+  "android-chrome-192x192.png"
+);
+
 const monocraftPath = join(
   process.cwd(),
   "public",
@@ -16,6 +23,9 @@ const monocraftPath = join(
 );
 
 const monocraftPromise = readFile(monocraftPath);
+const iconPromise = readFile(iconPath).then(
+  (buffer) => `data:image/png;base64,${buffer.toString("base64")}`
+);
 
 export async function GET(req: NextRequest) {
   const mode =
@@ -25,7 +35,7 @@ export async function GET(req: NextRequest) {
 
   const palette = mode === "dark" ? mocha : latte;
 
-  const monocraft = await monocraftPromise;
+  const [monocraft, icon] = await Promise.all([monocraftPromise, iconPromise]);
 
   return new ImageResponse(
     (
@@ -49,7 +59,7 @@ export async function GET(req: NextRequest) {
           {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
           <img
             style={{ height: "35%", marginLeft: `${0.4 * SCALER}rem` }}
-            src={`${req.nextUrl.protocol}//${req.nextUrl.host}/icon/android-chrome-512x512.png`}
+            src={icon}
           />
         </p>
       </div>
