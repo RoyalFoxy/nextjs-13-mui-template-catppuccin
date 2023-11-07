@@ -2,19 +2,20 @@
 
 import { AppBar, Box, Toolbar, useTheme } from "@mui/material";
 
-import Back from "./Back";
+import Back from "@navigation/bar/Back";
 import H from "@content/H";
-import MenuButton from "./MenuButton";
+import MenuButton from "@navigation/bar/MenuButton";
 import { useGlobalContext } from "@/globalContext";
 
 export default function Navbar() {
-  const ctx = useGlobalContext();
+  const globalCtx = useGlobalContext();
+  const theme = useTheme();
   return (
     <AppBar
       sx={{
         position: "fixed",
-        background: "var(--transparent-crust)",
-        boxShadow: "var(--template-shadows-4)",
+        background: theme.palette.catppuccin.crustTransparent,
+        boxShadow: theme.shadows[4],
         backdropFilter: "blur(var(--blur))",
         WebkitBackdropFilter: "blur(var(--blur))",
         padding: "1rem var(--margin)",
@@ -29,7 +30,7 @@ export default function Navbar() {
             extraSmall
             noTopMargin
             isSpan>
-            {ctx.pageName}
+            {globalCtx.pageName}
           </H>
         </Box>
       </Toolbar>

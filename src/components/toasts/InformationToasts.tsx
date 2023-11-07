@@ -1,9 +1,9 @@
 import { BaseVariant, useSnackbar } from "notistack";
-import { WEEK, fromToday } from "@/time";
+import { WEEK, fromToday } from "@time";
 
-import IsBlink from "@/utils/userAgent.ts/isBlink";
-import IsMobile from "../../utils/userAgent.ts/isMobile";
-import useCookies from "../cookies/useCookies";
+import IsBlink from "@utils/userAgent/isBlink";
+import IsMobile from "@utils/userAgent/isMobile";
+import useCookies from "@components/cookies/useCookies";
 import { useEffect } from "react";
 
 interface InformationToast {

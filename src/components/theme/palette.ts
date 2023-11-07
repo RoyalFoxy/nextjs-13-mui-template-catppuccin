@@ -1,4 +1,61 @@
-export const mocha = {
+export const transparency = "4c";
+
+type Palette = {
+  rosewater: string;
+  flamingo: string;
+  pink: string;
+  mauve: string;
+  red: string;
+  maroon: string;
+  peach: string;
+  yellow: string;
+  green: string;
+  teal: string;
+  sky: string;
+  sapphire: string;
+  blue: string;
+  lavender: string;
+  text: string;
+  subtext1: string;
+  subtext0: string;
+  overlay2: string;
+  overlay1: string;
+  overlay0: string;
+  surface2: string;
+  surface1: string;
+  surface0: string;
+  base: string;
+  mantle: string;
+  crust: string;
+  rosewaterTransparent: string;
+  flamingoTransparent: string;
+  pinkTransparent: string;
+  mauveTransparent: string;
+  redTransparent: string;
+  maroonTransparent: string;
+  peachTransparent: string;
+  yellowTransparent: string;
+  greenTransparent: string;
+  tealTransparent: string;
+  skyTransparent: string;
+  sapphireTransparent: string;
+  blueTransparent: string;
+  lavenderTransparent: string;
+  textTransparent: string;
+  subtext1Transparent: string;
+  subtext0Transparent: string;
+  overlay2Transparent: string;
+  overlay1Transparent: string;
+  overlay0Transparent: string;
+  surface2Transparent: string;
+  surface1Transparent: string;
+  surface0Transparent: string;
+  baseTransparent: string;
+  mantleTransparent: string;
+  crustTransparent: string;
+};
+
+const mochaColors = {
   rosewater: "#f5e0dc",
   flamingo: "#f2cdcd",
   pink: "#f5c2e7",
@@ -27,7 +84,15 @@ export const mocha = {
   crust: "#11111b",
 };
 
-export const latte = {
+export const mocha = {} as Palette;
+
+Object.entries(mochaColors).forEach(([_key, value]) => {
+  const key = _key as keyof typeof mochaColors;
+  mocha[key] = value;
+  mocha[`${key}Transparent`] = `${value}${transparency}`;
+});
+
+export const latteColors = {
   rosewater: "#dc8a78",
   flamingo: "#dd7878",
   pink: "#ea76cb",
@@ -55,3 +120,11 @@ export const latte = {
   mantle: "#e6e9ef",
   crust: "#dce0e8",
 };
+
+export const latte = {} as Palette;
+
+Object.entries(latteColors).forEach(([_key, value]) => {
+  const key = _key as keyof typeof latteColors;
+  latte[key] = value;
+  latte[`${key}Transparent`] = `${value}${transparency}`;
+});

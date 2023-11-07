@@ -24,8 +24,11 @@
       "@content/*": ["./src/components/content/*"],
       "@navigation/*": ["./src/components/navigation/*"],
       "@theme/*": ["./src/components/theme/*"],
+      "@image/*": ["./src/components/image/*"],
       "@image": ["./src/components/image/Image.tsx"],
-      "@utils/*": ["./src/utils/*"]
+      "@utils/*": ["./src/utils/*"],
+      "@time": ["./src/time.ts"],
+      "@package": ["./package.json"]
     }
   },
   "include": [
@@ -34,7 +37,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "../v3.royalfoxy.xyz/src/components/Content/Text.tsx",
-    "../v3.royalfoxy.xyz/src/components/Content/Title.tsx"
+    "../v3.royalfoxy.xyz/src/components/Content/Title.tsx",
+    "src/utils/userAgent"
   ],
   "exclude": ["node_modules"]
 }

@@ -1,9 +1,7 @@
-import { latte, mocha } from "./palette";
+import { latte, mocha, transparency } from "@theme/palette";
 
-import data from "@/../package.json";
+import data from "@package";
 import { experimental_extendTheme as extendTheme } from "@mui/material";
-
-export const transparency = "4c";
 
 const heading = () => ({
   color: "var(--template-palette-primary-main)",
@@ -15,32 +13,14 @@ const theme = extendTheme({
     dark: {
       palette: {
         catppuccin: mocha,
-        background: {
-          default: mocha.base,
-          paper: mocha.mantle,
-        },
-        common: {
-          white: mocha.text,
-          black: mocha.crust,
-        },
-        error: {
-          main: mocha.red,
-        },
-        primary: {
-          main: mocha.yellow,
-        },
-        info: {
-          main: mocha.sky,
-        },
-        secondary: {
-          main: mocha.mauve,
-        },
-        success: {
-          main: mocha.green,
-        },
-        warning: {
-          main: mocha.peach,
-        },
+        background: { default: mocha.base, paper: mocha.mantle },
+        common: { white: mocha.text, black: mocha.crust },
+        error: { main: mocha.red },
+        primary: { main: mocha.yellow },
+        info: { main: mocha.sky },
+        secondary: { main: mocha.mauve },
+        success: { main: mocha.green },
+        warning: { main: mocha.peach },
         text: {
           primary: mocha.text,
           secondary: mocha.subtext1,
@@ -52,32 +32,14 @@ const theme = extendTheme({
     light: {
       palette: {
         catppuccin: latte,
-        background: {
-          default: latte.base,
-          paper: latte.mantle,
-        },
-        common: {
-          white: latte.text,
-          black: latte.crust,
-        },
-        error: {
-          main: latte.red,
-        },
-        primary: {
-          main: latte.yellow,
-        },
-        info: {
-          main: latte.sky,
-        },
-        secondary: {
-          main: latte.mauve,
-        },
-        success: {
-          main: latte.green,
-        },
-        warning: {
-          main: latte.peach,
-        },
+        background: { default: latte.base, paper: latte.mantle },
+        common: { white: latte.text, black: latte.crust },
+        error: { main: latte.red },
+        primary: { main: latte.yellow },
+        info: { main: latte.sky },
+        secondary: { main: latte.mauve },
+        success: { main: latte.green },
+        warning: { main: latte.peach },
         text: {
           primary: latte.text,
           secondary: latte.subtext1,
@@ -116,7 +78,7 @@ const theme = extendTheme({
   cssVarPrefix: data.name,
 });
 
-function transparent(color: string) {
+export function transparent(color: string) {
   return `${color}${transparency}`;
 }
 
@@ -149,6 +111,32 @@ declare module "@mui/material/styles" {
       base: string;
       mantle: string;
       crust: string;
+      rosewaterTransparent: string;
+      flamingoTransparent: string;
+      pinkTransparent: string;
+      mauveTransparent: string;
+      redTransparent: string;
+      maroonTransparent: string;
+      peachTransparent: string;
+      yellowTransparent: string;
+      greenTransparent: string;
+      tealTransparent: string;
+      skyTransparent: string;
+      sapphireTransparent: string;
+      blueTransparent: string;
+      lavenderTransparent: string;
+      textTransparent: string;
+      subtext1Transparent: string;
+      subtext0Transparent: string;
+      overlay2Transparent: string;
+      overlay1Transparent: string;
+      overlay0Transparent: string;
+      surface2Transparent: string;
+      surface1Transparent: string;
+      surface0Transparent: string;
+      baseTransparent: string;
+      mantleTransparent: string;
+      crustTransparent: string;
     };
   }
   interface Palette {
@@ -179,6 +167,32 @@ declare module "@mui/material/styles" {
       base: string;
       mantle: string;
       crust: string;
+      rosewaterTransparent: string;
+      flamingoTransparent: string;
+      pinkTransparent: string;
+      mauveTransparent: string;
+      redTransparent: string;
+      maroonTransparent: string;
+      peachTransparent: string;
+      yellowTransparent: string;
+      greenTransparent: string;
+      tealTransparent: string;
+      skyTransparent: string;
+      sapphireTransparent: string;
+      blueTransparent: string;
+      lavenderTransparent: string;
+      textTransparent: string;
+      subtext1Transparent: string;
+      subtext0Transparent: string;
+      overlay2Transparent: string;
+      overlay1Transparent: string;
+      overlay0Transparent: string;
+      surface2Transparent: string;
+      surface1Transparent: string;
+      surface0Transparent: string;
+      baseTransparent: string;
+      mantleTransparent: string;
+      crustTransparent: string;
     };
   }
 }

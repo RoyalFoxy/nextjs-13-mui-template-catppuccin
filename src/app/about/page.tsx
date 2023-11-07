@@ -1,8 +1,8 @@
 "use client";
 
 import { Button } from "@mui/material";
-import Link from "@/components/navigation/Link";
-import P from "@/components/content/P";
+import Link from "@navigation/Link";
+import P from "@content/P";
 import { useSnackbar } from "notistack";
 
 export default function Page() {

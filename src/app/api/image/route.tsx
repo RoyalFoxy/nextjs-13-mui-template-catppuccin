@@ -1,9 +1,9 @@
-import { latte, mocha } from "@/components/theme/palette";
-import { readFile } from "fs/promises";
+import { latte, mocha } from "@theme/palette";
 
 import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
 import { join } from "path";
+import { readFile } from "fs/promises";
 
 const SCALER = 2;
 

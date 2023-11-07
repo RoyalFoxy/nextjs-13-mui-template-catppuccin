@@ -1,4 +1,4 @@
-import ClientImage from "./ClientImage";
+import ClientImage from "@image/ClientImage";
 import { createHash } from "crypto";
 
 interface Image {

@@ -1,12 +1,12 @@
 import { Alert, useTheme } from "@mui/material";
 import { CSSProperties, ForwardedRef, ReactNode, useMemo } from "react";
-import KeyNames, { KeyValue } from "../keyboard/useKeyName";
 
-import IsMobile from "../../utils/userAgent.ts/isMobile";
+import IsMobile from "../../utils/userAgent/isMobile";
+import KeyNames from "../keyboard/useKeyName";
 import KeyboardCommandKeyIcon from "@mui/icons-material/KeyboardCommandKey";
 import KeyboardOptionKeyIcon from "@mui/icons-material/KeyboardOptionKey";
 import interpolateColor from "@/utils/interpolateColor";
-import { transparency } from "../theme/Theme";
+import { transparent } from "../theme/Theme";
 import { useSnackbar } from "notistack";
 
 interface Toast {
@@ -38,12 +38,14 @@ export default function Toast(
 
   if (variant === "default") variant = "info";
 
-  const color = useMemo(() => {
-    return interpolateColor(
-      theme.palette.catppuccin.crust,
-      theme.palette[variant as "success" | "info" | "warning" | "error"][
-        theme.palette.mode
-      ]
+  const backgroundColor = useMemo(() => {
+    return transparent(
+      interpolateColor(
+        theme.palette.catppuccin.crust,
+        theme.palette[variant as "success" | "info" | "warning" | "error"][
+          theme.palette.mode
+        ]
+      )
     );
   }, [theme, variant]);
 
@@ -77,8 +79,8 @@ export default function Toast(
       style={style}
       severity={variant}
       sx={{
-        background: `${color}${transparency}`,
-        boxShadow: "var(--template-shadows-4)",
+        background: backgroundColor,
+        boxShadow: theme.shadows[4],
       }}
       onClose={() => closeSnackbar(id)}>
       {content}

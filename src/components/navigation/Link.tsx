@@ -9,18 +9,18 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { ReactNode, useEffect, useState } from "react";
-import { WEEK, fromToday } from "@/time";
+import { MouseEvent, ReactNode, useCallback, useEffect, useState } from "react";
+import { WEEK, fromToday } from "@time";
 import { usePathname, useRouter } from "next/navigation";
 
 import Image from "next/image";
+import IsMobile from "@utils/userAgent/isMobile";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { PrefetchKind } from "next/dist/client/components/router-reducer/router-reducer-types";
 import { Preview } from "@/app/api/preview/route";
-import { transparency } from "../theme/Theme";
-import useCookies from "../cookies/useCookies";
-import { useFadeContext } from "./FadeContext";
-import { useKeyPressed } from "../keyboard/KeyboardContext";
+import useCookies from "@components/cookies/useCookies";
+import { useFadeContext } from "@navigation/FadeContext";
+import { useKeyPressed } from "@components/keyboard/KeyboardContext";
 import { useSnackbar } from "notistack";
 
 interface Link {
@@ -42,6 +42,7 @@ export default function Link({ children, href = "", noPreview }: Link) {
     null
   );
   const [hovering, setHovering] = useState({ link: false, preview: false });
+  const [openedContextMenu, setOpenedContextMenu] = useState(false);
 
   const [previewState, setPreviewState] = useState<Preview | null>(null);
 
@@ -71,23 +72,31 @@ export default function Link({ children, href = "", noPreview }: Link) {
 
   useEffect(() => {
     const isHovering = hovering.link || hovering.preview;
-    const shouldShow = isHovering && !!previewState && metaPressed;
+    const canOpen = metaPressed || openedContextMenu;
+    const isHoveringLink = hovering.link || openedContextMenu;
+    const shouldShow = isHovering && !!previewState && canOpen;
 
-    if (
-      isHovering &&
-      metaPressed &&
-      !!noPreview &&
-      !getCookie<boolean>(noPreviewCookieName)
-    ) {
-      enqueueSnackbar(
-        "There is no preview for some links. This is indicated by the red blinking animation.",
-        {
-          variant: "warning",
-          persist: true,
-          onClose: () =>
-            setCookie(noPreviewCookieName, true, { expires: fromToday(WEEK) }),
-        }
-      );
+    if (isHovering && canOpen && !!noPreview) {
+      if (!getCookie<boolean>(noPreviewCookieName))
+        enqueueSnackbar(
+          `There is no preview for some links. This is indicated by ${
+            IsMobile() ? "the red blinking animation." : "the error toast."
+          }`,
+          {
+            variant: "warning",
+            persist: true,
+            onClose: () =>
+              setCookie(noPreviewCookieName, true, {
+                expires: fromToday(WEEK),
+              }),
+          }
+        );
+      if (IsMobile()) {
+        enqueueSnackbar(`No preview available for this link.`, {
+          variant: "error",
+        });
+        setOpenedContextMenu(false);
+      }
       return;
     }
 
@@ -97,10 +106,10 @@ export default function Link({ children, href = "", noPreview }: Link) {
     );
 
     let loadingState: "loading" | "loaded" | null = null;
-    if (hovering.link && !previewState) loadingState = "loading";
-    else if (hovering.link) loadingState = "loaded";
+    if (isHoveringLink && !previewState) loadingState = "loading";
+    else if (isHoveringLink) loadingState = "loaded";
 
-    if (!metaPressed) loadingState = null;
+    if (!canOpen) loadingState = null;
 
     let timeout2: any = null;
 
@@ -128,9 +137,101 @@ export default function Link({ children, href = "", noPreview }: Link) {
     enqueueSnackbar,
     getCookie,
     setCookie,
+    openedContextMenu,
   ]);
 
-  const overlay = `${theme.palette.catppuccin.overlay0}${transparency}`;
+  const handleLinkEnter = useCallback(
+    (event: MouseEvent<HTMLAnchorElement>) => {
+      if (!newTab) router.prefetch(href, { kind: PrefetchKind.FULL });
+      setHovering((hovering) => ({ ...hovering, link: true }));
+      if (noPreview) return;
+
+      setAnchorEl(event.currentTarget);
+
+      if (!previewState)
+        fetch("/api/preview", {
+          body: JSON.stringify({ preview: href }),
+          method: "POST",
+        })
+          .then(async (response) => {
+            const previewState: Preview = await response.json();
+            setPreviewState(previewState);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+    },
+    [href, newTab, noPreview, previewState, router]
+  );
+
+  const handleLinkLeave = useCallback(() => {
+    setHovering((hovering) => ({ ...hovering, link: false }));
+    if (noPreview) return;
+
+    if (currentTimeout) {
+      clearTimeout(currentTimeout);
+      setCurrentTimeout(null);
+    }
+  }, [currentTimeout, noPreview]);
+
+  const handleLinkClick = useCallback(
+    (event: MouseEvent<HTMLAnchorElement>) => {
+      if (newTab) return;
+      event.preventDefault();
+
+      const regex = new RegExp(
+        `^${href.split("?")[0].replaceAll("/", "\\/")}(\\?.*)?$`
+      );
+      if (regex.test(pathname)) {
+        enqueueSnackbar("Clicking this link does nothing.");
+        return;
+      }
+
+      setShowPreview(false);
+
+      fadeCtx.nextHref = href;
+
+      fadeCtx.isExiting = true;
+      fadeCtx.visible = false;
+    },
+    [enqueueSnackbar, fadeCtx, href, newTab, pathname]
+  );
+
+  const handleContextMenu = useCallback(
+    (event: MouseEvent<HTMLAnchorElement>) => {
+      event.preventDefault();
+      if (!newTab) router.prefetch(href, { kind: PrefetchKind.FULL });
+      setHovering((hovering) => ({ ...hovering, link: true }));
+      setOpenedContextMenu(true);
+      if (noPreview) return;
+
+      function onUserInteract() {
+        setOpenedContextMenu(false);
+        document.removeEventListener("click", onUserInteract);
+        document.removeEventListener("touchstart", onUserInteract);
+      }
+
+      document.addEventListener("click", onUserInteract);
+      document.addEventListener("touchstart", onUserInteract);
+
+      setAnchorEl(event.currentTarget);
+
+      if (!previewState)
+        fetch("/api/preview", {
+          body: JSON.stringify({ preview: href }),
+          method: "POST",
+        })
+          .then(async (response) => {
+            const previewState: Preview = await response.json();
+            setPreviewState(previewState);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+    },
+    [href, newTab, noPreview, previewState, router]
+  );
+
   const transparent = `#00000000`;
 
   return (
@@ -140,89 +241,14 @@ export default function Link({ children, href = "", noPreview }: Link) {
         sx={{
           "transition": `text-decoration-color ${standard}ms ease`,
           "&:hover span svg": {
-            color: "var(--template-palette-primary-main)",
+            color: theme.palette.primary.main,
           },
         }}
         href={href}
-        onMouseEnter={(e) => {
-          if (!newTab) router.prefetch(href, { kind: PrefetchKind.FULL });
-          setHovering((hovering) => ({ ...hovering, link: true }));
-          if (noPreview) return;
-
-          setAnchorEl(e.currentTarget);
-
-          if (!previewState)
-            fetch("/api/preview", {
-              body: JSON.stringify({ preview: href }),
-              method: "POST",
-            })
-              .then(async (response) => {
-                const previewState: Preview = await response.json();
-                setPreviewState(previewState);
-              })
-              .catch((error) => {
-                console.error(error);
-              });
-        }}
-        onMouseLeave={() => {
-          setHovering((hovering) => ({ ...hovering, link: false }));
-          if (noPreview) return;
-
-          if (currentTimeout) {
-            clearTimeout(currentTimeout);
-            setCurrentTimeout(null);
-          }
-        }}
-        onClick={(event) => {
-          if (newTab) return;
-          event.preventDefault();
-
-          const regex = new RegExp(
-            `^${href.split("?")[0].replaceAll("/", "\\/")}(\\?.*)?$`
-          );
-          if (regex.test(pathname)) {
-            enqueueSnackbar("Clicking this link does nothing.");
-            return;
-          }
-
-          setShowPreview(false);
-
-          fadeCtx.nextHref = href;
-
-          fadeCtx.isExiting = true;
-          fadeCtx.visible = false;
-        }}>
-        <style jsx>{`
-          @keyframes loading-animation {
-            0% {
-              background-color: ${transparent};
-            }
-            50% {
-              background-color: ${overlay};
-            }
-            100% {
-              background-color: ${transparent};
-            }
-          }
-
-          @keyframes no-preview-blink {
-            0% {
-              color: var(--template-palette-primary-main);
-            }
-            25% {
-              color: var(--template-palette-error-main);
-            }
-            50% {
-              color: var(--template-palette-primary-main);
-            }
-            75% {
-              color: var(--template-palette-error-main);
-            }
-            100% {
-              color: var(--template-palette-primary-main);
-            }
-          }
-        `}</style>
+        onMouseEnter={handleLinkEnter}
+        onMouseLeave={handleLinkLeave}
+        onContextMenu={handleContextMenu}
+        onClick={handleLinkClick}>
         {noPreview ? (
           <span
             style={{
@@ -238,7 +264,7 @@ export default function Link({ children, href = "", noPreview }: Link) {
                   width: "1rem",
                   height: "1rem",
                   verticalAlign: "-7.5%",
-                  color: "var(--template-palette-primary-dark)",
+                  color: theme.palette.primary.dark,
                   transition: `color ${standard}ms ease`,
                 }}
               />
@@ -248,7 +274,9 @@ export default function Link({ children, href = "", noPreview }: Link) {
           <span
             style={{
               backgroundColor:
-                loadingState === "loaded" ? overlay : transparent,
+                loadingState === "loaded"
+                  ? theme.palette.catppuccin.overlay0Transparent
+                  : transparent,
               transition: `background ${standard}ms`,
               animation:
                 loadingState === "loading"
@@ -265,7 +293,7 @@ export default function Link({ children, href = "", noPreview }: Link) {
                   width: "1rem",
                   height: "1rem",
                   verticalAlign: "-7.5%",
-                  color: "var(--template-palette-primary-dark)",
+                  color: theme.palette.primary.dark,
                   transition: `color ${standard}ms ease`,
                 }}
               />
@@ -289,14 +317,14 @@ export default function Link({ children, href = "", noPreview }: Link) {
           onClose={() => {
             setAnchorEl(null);
             setShowPreview(false);
-            setHovering(() => ({ link: false, preview: false }));
+            setHovering({ link: false, preview: false });
           }}
           disableRestoreFocus>
           <Card
             sx={{
               width: PREVIEW_WIDTH,
               pointerEvents: "all",
-              background: `${theme.palette.catppuccin.crust}${transparency}`,
+              background: theme.palette.catppuccin.crustTransparent,
             }}
             onMouseEnter={() => {
               setHovering((hovering) => ({ ...hovering, preview: true }));
