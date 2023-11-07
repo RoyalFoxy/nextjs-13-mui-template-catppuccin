@@ -1,11 +1,12 @@
 "use client";
 
-import { AppBar, Box, Toolbar, useTheme } from "@mui/material";
+import { AppBar, Box, Toolbar } from "@mui/material";
 
 import Back from "@navigation/bar/Back";
 import H from "@content/H";
 import MenuButton from "@navigation/bar/MenuButton";
 import { useGlobalContext } from "@/globalContext";
+import useTheme from "@useTheme";
 
 export default function Navbar() {
   const globalCtx = useGlobalContext();
@@ -14,8 +15,8 @@ export default function Navbar() {
     <AppBar
       sx={{
         position: "fixed",
-        background: theme.palette.catppuccin.crustTransparent,
-        boxShadow: theme.shadows[4],
+        background: theme.vars.palette.transparent.catppuccin.crust,
+        boxShadow: theme.vars.shadows[4],
         backdropFilter: "blur(var(--blur))",
         WebkitBackdropFilter: "blur(var(--blur))",
         padding: "1rem var(--margin)",

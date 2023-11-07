@@ -1,5 +1,5 @@
 import useMediaQuery from "@utils/useMediaQuery";
 
-export default function usePrefersDarkMode(defaultValue: boolean) {
-  return useMediaQuery("(prefers-color-scheme: dark)", defaultValue);
+export default function usePrefersDarkMode(serverDarkMode: boolean) {
+  return useMediaQuery("(prefers-color-scheme: dark)", serverDarkMode);
 }

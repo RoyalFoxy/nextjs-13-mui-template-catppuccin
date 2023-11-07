@@ -1,13 +1,14 @@
-import { Alert, useTheme } from "@mui/material";
 import { CSSProperties, ForwardedRef, ReactNode, useMemo } from "react";
 
+import { Alert } from "@mui/material";
 import IsMobile from "../../utils/userAgent/isMobile";
 import KeyNames from "../keyboard/useKeyName";
 import KeyboardCommandKeyIcon from "@mui/icons-material/KeyboardCommandKey";
 import KeyboardOptionKeyIcon from "@mui/icons-material/KeyboardOptionKey";
 import interpolateColor from "@/utils/interpolateColor";
-import { transparent } from "../theme/Theme";
+import { transparent } from "../theme/palette";
 import { useSnackbar } from "notistack";
+import useTheme from "@useTheme";
 
 interface Toast {
   id: number;
@@ -80,7 +81,7 @@ export default function Toast(
       severity={variant}
       sx={{
         background: backgroundColor,
-        boxShadow: theme.shadows[4],
+        boxShadow: theme.vars.shadows[4],
       }}
       onClose={() => closeSnackbar(id)}>
       {content}

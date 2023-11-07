@@ -1,59 +1,24 @@
-export const transparency = "4c";
+import { darken, lighten } from "@mui/material";
 
-type Palette = {
-  rosewater: string;
-  flamingo: string;
-  pink: string;
-  mauve: string;
-  red: string;
-  maroon: string;
-  peach: string;
-  yellow: string;
-  green: string;
-  teal: string;
-  sky: string;
-  sapphire: string;
-  blue: string;
-  lavender: string;
-  text: string;
-  subtext1: string;
-  subtext0: string;
-  overlay2: string;
-  overlay1: string;
-  overlay0: string;
-  surface2: string;
-  surface1: string;
-  surface0: string;
-  base: string;
-  mantle: string;
-  crust: string;
-  rosewaterTransparent: string;
-  flamingoTransparent: string;
-  pinkTransparent: string;
-  mauveTransparent: string;
-  redTransparent: string;
-  maroonTransparent: string;
-  peachTransparent: string;
-  yellowTransparent: string;
-  greenTransparent: string;
-  tealTransparent: string;
-  skyTransparent: string;
-  sapphireTransparent: string;
-  blueTransparent: string;
-  lavenderTransparent: string;
-  textTransparent: string;
-  subtext1Transparent: string;
-  subtext0Transparent: string;
-  overlay2Transparent: string;
-  overlay1Transparent: string;
-  overlay0Transparent: string;
-  surface2Transparent: string;
-  surface1Transparent: string;
-  surface0Transparent: string;
-  baseTransparent: string;
-  mantleTransparent: string;
-  crustTransparent: string;
+const colorMap: {
+  background: { default: ColorKey; paper: ColorKey };
+  error: { main: ColorKey };
+  primary: { main: ColorKey };
+  info: { main: ColorKey };
+  secondary: { main: ColorKey };
+  success: { main: ColorKey };
+  warning: { main: ColorKey };
+} = {
+  background: { default: "base", paper: "mantle" },
+  error: { main: "red" },
+  primary: { main: "yellow" },
+  info: { main: "sky" },
+  secondary: { main: "mauve" },
+  success: { main: "green" },
+  warning: { main: "peach" },
 };
+
+export const transparency = "4c";
 
 const mochaColors = {
   rosewater: "#f5e0dc",
@@ -84,14 +49,6 @@ const mochaColors = {
   crust: "#11111b",
 };
 
-export const mocha = {} as Palette;
-
-Object.entries(mochaColors).forEach(([_key, value]) => {
-  const key = _key as keyof typeof mochaColors;
-  mocha[key] = value;
-  mocha[`${key}Transparent`] = `${value}${transparency}`;
-});
-
 export const latteColors = {
   rosewater: "#dc8a78",
   flamingo: "#dd7878",
@@ -121,10 +78,107 @@ export const latteColors = {
   crust: "#dce0e8",
 };
 
-export const latte = {} as Palette;
+export const [mocha, mochaTheme, transparentMocha] = create(mochaColors);
+export const [latte, latteTheme, transparentLatte] = create(latteColors);
 
-Object.entries(latteColors).forEach(([_key, value]) => {
-  const key = _key as keyof typeof latteColors;
-  latte[key] = value;
-  latte[`${key}Transparent`] = `${value}${transparency}`;
-});
+function create(
+  colors: typeof mochaColors
+): [Catppuccin, Theme, TransparentColors] {
+  const palette = {} as Catppuccin;
+  const theme = {} as Theme;
+  const transparentTheme = {} as TransparentColors;
+
+  Object.entries(colors).forEach(([_key, value]) => {
+    const key = _key as keyof typeof colors;
+    palette[key] = value;
+    if (!transparentTheme.catppuccin)
+      transparentTheme.catppuccin = { [key]: transparent(value) } as Catppuccin;
+    else transparentTheme.catppuccin[key] = transparent(value);
+  });
+  Object.entries(colorMap).map(([key, innerMap]) =>
+    Object.entries(innerMap).map(([innerKey, colorKey]) => {
+      // TODO: Remove @ts-ignore
+
+      const color = colors[colorKey];
+      // @ts-ignore
+      if (!theme[key]) theme[key] = { [innerKey]: color };
+      // @ts-ignore
+      else theme[key][innerKey] = color;
+
+      // @ts-ignore
+      if (!transparentTheme[key])
+        // @ts-ignore
+        transparentTheme[key] = { [innerKey]: transparent(color) } as {
+          default: string;
+          paper: string;
+        } & PaletteColor;
+      // @ts-ignore
+      else transparentTheme[key][innerKey] = transparent(color);
+      // @ts-ignore
+      if (innerKey === "main") addLightAndDark(transparentTheme[key]);
+    })
+  );
+
+  return [palette, theme, transparentTheme];
+}
+
+export function transparent(color: string) {
+  return `${color}${transparency}`;
+}
+
+function addLightAndDark(intent: PaletteColor) {
+  const tonalOffsetLight = 0.2;
+  const tonalOffsetDark = 0.2 * 1.5;
+
+  intent.light = lighten(intent.main, tonalOffsetLight);
+  intent.dark = darken(intent.main, tonalOffsetDark);
+}
+
+export type Catppuccin = {
+  rosewater: string;
+  flamingo: string;
+  pink: string;
+  mauve: string;
+  red: string;
+  maroon: string;
+  peach: string;
+  yellow: string;
+  green: string;
+  teal: string;
+  sky: string;
+  sapphire: string;
+  blue: string;
+  lavender: string;
+  text: string;
+  subtext1: string;
+  subtext0: string;
+  overlay2: string;
+  overlay1: string;
+  overlay0: string;
+  surface2: string;
+  surface1: string;
+  surface0: string;
+  base: string;
+  mantle: string;
+  crust: string;
+};
+
+export type TransparentColors = { catppuccin: Catppuccin } & Theme;
+
+type PaletteColor = {
+  light: string;
+  main: string;
+  dark: string;
+};
+
+type Theme = {
+  background: { default: string; paper: string };
+  error: PaletteColor;
+  primary: PaletteColor;
+  info: PaletteColor;
+  secondary: PaletteColor;
+  success: PaletteColor;
+  warning: PaletteColor;
+};
+
+type ColorKey = keyof typeof mochaColors;

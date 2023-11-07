@@ -4,6 +4,7 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
+import DebugTheme from "@/components/DebugTheme";
 import { FadeContext } from "@navigation/FadeContext";
 import GlobalContext from "@/globalContext";
 import { KeyboardContext } from "@components/keyboard/KeyboardContext";
@@ -40,6 +41,7 @@ export default function Layout({ children }: Layout) {
             <FadeContext>
               <KeyboardContext>
                 <LayoutView>{children}</LayoutView>
+                {/* <DebugTheme /> */}
               </KeyboardContext>
             </FadeContext>
           </ThemeRegistry>

@@ -28,6 +28,7 @@
       "@image": ["./src/components/image/Image.tsx"],
       "@utils/*": ["./src/utils/*"],
       "@time": ["./src/time.ts"],
+      "@useTheme": ["./src/utils/useTheme.ts"],
       "@package": ["./package.json"]
     }
   },

@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Fade as MuiFade, useTheme } from "@mui/material";
+import { Box, Fade as MuiFade } from "@mui/material";
 import {
   ReactElement,
   createContext,
@@ -9,6 +9,8 @@ import {
   useState,
 } from "react";
 import { usePathname, useRouter } from "next/navigation";
+
+import useTheme from "@useTheme";
 
 interface Context {
   visible: boolean;

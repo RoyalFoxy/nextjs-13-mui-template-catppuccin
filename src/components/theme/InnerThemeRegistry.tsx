@@ -6,6 +6,7 @@ import Latte from "@components/HLJS/themes/Mocha";
 import Mocha from "@components/HLJS/themes/Mocha";
 import { useColorScheme } from "@mui/material";
 import usePrefersDarkMode from "@utils/usePrefersDarkMode";
+import useTheme from "@useTheme";
 
 interface InnerThemeRegistry {
   serverDarkMode: boolean;
@@ -19,6 +20,7 @@ export default function InnerThemeRegistry({
   const prefersDarkMode = usePrefersDarkMode(serverDarkMode);
 
   const scheme = useColorScheme();
+  const theme = useTheme();
   const mode = getPreferredMode(prefersDarkMode);
 
   // This is a fix for when a user changes their theme mode

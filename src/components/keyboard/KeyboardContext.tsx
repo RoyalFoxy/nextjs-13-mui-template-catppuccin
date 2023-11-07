@@ -31,7 +31,7 @@ export function useKeyPressed(code: string) {
 }
 
 interface KeyboardContext {
-  children: ReactElement;
+  children: ReactElement | ReactElement[];
 }
 
 export function KeyboardContext({ children }: KeyboardContext) {

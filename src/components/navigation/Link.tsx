@@ -7,7 +7,6 @@ import {
   Link as MuiLink,
   Popover,
   Typography,
-  useTheme,
 } from "@mui/material";
 import { MouseEvent, ReactNode, useCallback, useEffect, useState } from "react";
 import { WEEK, fromToday } from "@time";
@@ -22,6 +21,7 @@ import useCookies from "@components/cookies/useCookies";
 import { useFadeContext } from "@navigation/FadeContext";
 import { useKeyPressed } from "@components/keyboard/KeyboardContext";
 import { useSnackbar } from "notistack";
+import useTheme from "@useTheme";
 
 interface Link {
   href?: string;
@@ -241,7 +241,7 @@ export default function Link({ children, href = "", noPreview }: Link) {
         sx={{
           "transition": `text-decoration-color ${standard}ms ease`,
           "&:hover span svg": {
-            color: theme.palette.primary.main,
+            color: theme.vars.palette.primary.main,
           },
         }}
         href={href}
@@ -264,7 +264,7 @@ export default function Link({ children, href = "", noPreview }: Link) {
                   width: "1rem",
                   height: "1rem",
                   verticalAlign: "-7.5%",
-                  color: theme.palette.primary.dark,
+                  color: theme.vars.palette.primary[theme.vars.palette.mode],
                   transition: `color ${standard}ms ease`,
                 }}
               />
@@ -275,7 +275,7 @@ export default function Link({ children, href = "", noPreview }: Link) {
             style={{
               backgroundColor:
                 loadingState === "loaded"
-                  ? theme.palette.catppuccin.overlay0Transparent
+                  ? theme.vars.palette.transparent.catppuccin.overlay0
                   : transparent,
               transition: `background ${standard}ms`,
               animation:
@@ -284,7 +284,7 @@ export default function Link({ children, href = "", noPreview }: Link) {
                   : "",
               padding: "0.5rem",
               margin: "-0.5rem",
-              borderRadius: theme.shape.borderRadius,
+              borderRadius: theme.vars.shape.borderRadius,
             }}>
             {children}
             {newTab && (
@@ -293,7 +293,7 @@ export default function Link({ children, href = "", noPreview }: Link) {
                   width: "1rem",
                   height: "1rem",
                   verticalAlign: "-7.5%",
-                  color: theme.palette.primary.dark,
+                  color: theme.vars.palette.primary[theme.vars.palette.mode],
                   transition: `color ${standard}ms ease`,
                 }}
               />
@@ -324,7 +324,7 @@ export default function Link({ children, href = "", noPreview }: Link) {
             sx={{
               width: PREVIEW_WIDTH,
               pointerEvents: "all",
-              background: theme.palette.catppuccin.crustTransparent,
+              background: theme.vars.palette.transparent.catppuccin.crust,
             }}
             onMouseEnter={() => {
               setHovering((hovering) => ({ ...hovering, preview: true }));

@@ -1,7 +1,9 @@
 "use client";
 
-import { Box, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
+
+import { Box } from "@mui/material";
+import useTheme from "@useTheme";
 
 interface ClientImage {
   name: string;
@@ -56,7 +58,7 @@ export default function ClientImage({ name, blurred, alt }: ClientImage) {
           MozAnimation: loading ? "" : "fade 1s",
           WebkitAnimation: loading ? "" : "fade 1s",
           opacity: loading ? 1 : 0,
-          boxShadow: theme.shadows[2],
+          boxShadow: theme.vars.shadows[2],
         }}
       />
       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -72,7 +74,7 @@ export default function ClientImage({ name, blurred, alt }: ClientImage) {
           transition: "opacity 1s ease-in-out",
           MozTransition: "opacity 1s ease-in-out",
           WebkitTransition: "opacity 1s ease-in-out",
-          boxShadow: theme.shadows[2],
+          boxShadow: theme.vars.shadows[2],
         }}
       />
     </Box>
