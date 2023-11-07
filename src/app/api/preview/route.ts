@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { load } from "cheerio";
-import { writeFileSync } from "fs";
 
 export async function POST(req: NextRequest) {
   const body = await req.text();
