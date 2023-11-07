@@ -13,6 +13,7 @@ import { ReactNode, useEffect, useState } from "react";
 import { WEEK, fromToday } from "@/time";
 import { usePathname, useRouter } from "next/navigation";
 
+import Image from "next/image";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { PrefetchKind } from "next/dist/client/components/router-reducer/router-reducer-types";
 import { Preview } from "@/app/api/preview/route";
@@ -311,8 +312,7 @@ export default function Link({ children, href = "", noPreview }: Link) {
               <div style={{ width: PREVIEW_WIDTH }}>
                 {previewState?.image && (
                   <>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                       src={previewState?.image}
                       alt="Preview image"
                       width={IMAGE_WIDTH}

@@ -5,7 +5,7 @@ import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
 import { join } from "path";
 
-const SCALER = 5;
+const SCALER = 2;
 
 const monocraftPath = join(
   process.cwd(),
@@ -45,14 +45,14 @@ export async function GET(req: NextRequest) {
           style={{
             margin: "auto",
             textAlign: "center",
-            fontSize: "10rem",
+            fontSize: `${2 * SCALER}rem`,
             color: palette.text,
             fontFamily: "Monocraft",
           }}>
           royalfoxy.xyz
           {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
           <img
-            style={{ height: "35%", marginLeft: "2rem" }}
+            style={{ height: "35%", marginLeft: `${0.4 * SCALER}rem` }}
             src={`${req.nextUrl.protocol}//${req.nextUrl.host}/icon/android-chrome-512x512.png`}
           />
         </p>
