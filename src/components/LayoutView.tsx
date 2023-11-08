@@ -7,7 +7,6 @@ import InformationToasts from "./toasts/InformationToasts";
 import Navbar from "@navigation/bar/Navbar";
 import { SnackbarProvider } from "notistack";
 import Toast from "@components/toasts/Toast";
-import { transparent } from "./theme/palette";
 import useTheme from "@useTheme";
 
 interface LayoutView {
@@ -16,7 +15,6 @@ interface LayoutView {
 
 export default function LayoutView({ children }: LayoutView) {
   const theme = useTheme();
-  const selectionColor = transparent(theme.vars.palette.primary.main);
 
   return (
     <SnackbarProvider
@@ -41,7 +39,7 @@ export default function LayoutView({ children }: LayoutView) {
         global
         jsx>{`
         *::selection {
-          background: ${selectionColor};
+          background: ${theme.vars.palette.transparent.primary.main};
         }
 
         @keyframes loading-animation {
