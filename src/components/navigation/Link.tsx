@@ -321,11 +321,7 @@ export default function Link({ children, href = "", noPreview }: Link) {
           }}
           disableRestoreFocus>
           <Card
-            sx={{
-              width: PREVIEW_WIDTH,
-              pointerEvents: "all",
-              background: theme.vars.palette.transparent.catppuccin.crust,
-            }}
+            sx={{ width: PREVIEW_WIDTH, pointerEvents: "all" }}
             onMouseEnter={() => {
               setHovering((hovering) => ({ ...hovering, preview: true }));
             }}
@@ -338,10 +334,10 @@ export default function Link({ children, href = "", noPreview }: Link) {
             }}>
             {previewState ? (
               <div style={{ width: PREVIEW_WIDTH }}>
-                {previewState?.image && (
+                {previewState.image && (
                   <>
                     <Image
-                      src={previewState?.image}
+                      src={previewState.image}
                       alt="Preview image"
                       width={IMAGE_WIDTH}
                       height={IMAGE_HEIGHT}
@@ -350,21 +346,21 @@ export default function Link({ children, href = "", noPreview }: Link) {
                   </>
                 )}
                 <Box sx={{ padding: 2 }}>
-                  {previewState?.title && (
+                  {previewState.title && (
                     <Typography
                       sx={{
                         textAlign: "justify",
                         fontWeight: "bold",
                         paddingBottom: 1,
                       }}>
-                      {previewState?.title}
+                      {previewState.title}
                     </Typography>
                   )}
-                  {previewState?.description && (
+                  {previewState.description && (
                     <Typography
                       sx={{ textAlign: "justify", paddingBottom: 1 }}
                       variant="body2">
-                      {previewState?.description}
+                      {previewState.description}
                     </Typography>
                   )}
                   <Typography
@@ -374,9 +370,9 @@ export default function Link({ children, href = "", noPreview }: Link) {
                       wordBreak: "break-all",
                     }}
                     variant="body2">
-                    {previewState?.url}
+                    {previewState.url}
                   </Typography>
-                  {!(previewState?.title || previewState?.description) && (
+                  {!(previewState.title || previewState.description) && (
                     <Typography
                       sx={{ textAlign: "left" }}
                       variant="body2">

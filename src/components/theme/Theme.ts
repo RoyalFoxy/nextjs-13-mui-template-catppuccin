@@ -69,7 +69,7 @@ const theme = extendTheme({
     MuiPaper: {
       styleOverrides: {
         root: ({ theme }) => ({
-          background: theme.vars.palette.transparent.catppuccin.crust,
+          background: theme.vars.palette.transparent.catppuccin.mantle,
           backdropFilter: "blur(var(--blur))",
         }),
       },
