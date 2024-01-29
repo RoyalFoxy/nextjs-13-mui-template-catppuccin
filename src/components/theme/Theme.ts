@@ -5,7 +5,6 @@ import {
   latteTheme,
   mocha,
   mochaTheme,
-  transparent,
   transparentLatte,
   transparentMocha,
 } from "@theme/palette";

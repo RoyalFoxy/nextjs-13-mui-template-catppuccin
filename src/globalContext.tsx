@@ -10,7 +10,7 @@ import {
 
 import { usePathname } from "next/navigation";
 
-const pageNameMap: { [key: string]: string } = {
+const pageNameMap: Record<string, string> = {
   "/": "Home",
   "/about": "About",
 };

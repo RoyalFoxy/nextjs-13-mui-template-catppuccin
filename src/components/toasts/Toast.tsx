@@ -25,7 +25,7 @@ const iconStyle = {
   alignSelf: "center",
 };
 
-const icons: { [key: string]: ReactNode } = {
+const icons: Record<string, ReactNode> = {
   command: <KeyboardCommandKeyIcon sx={iconStyle} />,
   option: <KeyboardOptionKeyIcon sx={iconStyle} />,
 };

@@ -1,5 +1,5 @@
+import hash from "@/utils/hash";
 import ClientImage from "@image/ClientImage";
-import { createHash } from "crypto";
 
 interface Image {
   name: string;
@@ -7,8 +7,8 @@ interface Image {
 }
 
 export default function Image({ name, alt }: Image) {
-  const imageHash = createHash("md5").update(name).digest("hex");
-  const blurredHash = createHash("md5").update(`${name}.blur`).digest("hex");
+  const imageHash = hash(name);
+  const blurredHash = hash(`${name}.blur`);
 
   return (
     <ClientImage

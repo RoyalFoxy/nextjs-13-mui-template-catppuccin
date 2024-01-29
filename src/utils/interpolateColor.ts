@@ -14,9 +14,7 @@ export default function interpolateColor(
   const color2Matches = color2.match(rgbRegex);
 
   if (color1Matches) {
-    const { red, green, blue } = color1Matches.groups as {
-      [key: string]: string;
-    };
+    const { red, green, blue } = color1Matches.groups as Record<string, string>;
 
     const r = stringDigitToHex(red);
     const g = stringDigitToHex(green);
@@ -26,9 +24,7 @@ export default function interpolateColor(
   }
 
   if (color2Matches) {
-    const { red, green, blue } = color2Matches.groups as {
-      [key: string]: string;
-    };
+    const { red, green, blue } = color2Matches.groups as Record<string, string>;
 
     const r = stringDigitToHex(red);
     const g = stringDigitToHex(green);
